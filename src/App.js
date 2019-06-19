@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component, PureComponent} from 'react';
+import {connect} from 'react-redux';
+import {do_init, do_load} from './actions';
+import Viewer from './Viewer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+    constructor(props) {
+        super(props);
+    }
+    componentDidMount() {
+        if(this.props.loading_status==='not_init')
+            this.props.do_init();
+    }
+    render() {
+        if(this.props.loading_status==='not_init')
+            return 'not init';
+        else if(this.props.loading_status==='initing')
+            return 'initing';
+        else if(this.props.loading_status==='init_error')
+            return this.props.error;
+        else if(this.props.loading_status==='ready')
+            return (
+                <div>
+                    ready
+                    <button onClick={this.props.do_load()}>load</button>
+                </div>
+            );
+        else if(this.props.loading_status==='loading')
+            return 'loading';
+        else if(this.props.loading_status==='load_error')
+            return this.props.error;
+        else if(this.props.loading_status==='done')
+            return <Viewer />;
+        else
+            return null;
+    }
 }
 
-export default App;
+let state_to_props=(state)=>({
+    loading_status: state.loading_status,
+    isop_token: state.isop_token,
+    error: state.error,
+});
+
+let dispatch_to_props=(dispatch)=>({
+    do_init: ()=>dispatch(do_init()),
+    do_load: ()=>dispatch(do_load()),
+});
+
+export default connect(state_to_props,dispatch_to_props)(App);
