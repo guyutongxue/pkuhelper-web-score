@@ -1,7 +1,8 @@
 .row-backbar {
     width: 60%;
     z-index: 1;
-    height: 2.7em;
-    margin-bottom: -2.7em;
+    height: 2.65em;
+    margin-bottom: -2.65em;
     position: relative;
+    transition: width .15s ease-out;
 }

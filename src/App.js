@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {do_init, do_load} from './actions';
 import Viewer from './Viewer';
 import OsuButton from './OsuButton';
+import Controller from './Controller';
 
 class App extends Component {
     constructor(props) {
@@ -28,7 +29,12 @@ class App extends Component {
         else if(this.props.loading_status==='load_error')
             return (<OsuButton text={this.props.error} button_text="!" disabled />);
         else if(this.props.loading_status==='done')
-            return <Viewer />;
+            return (
+                <div>
+                    <Controller />
+                    <Viewer />
+                </div>
+            );
         else
             return null;
     }

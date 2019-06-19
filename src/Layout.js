@@ -1,4 +1,5 @@
 import React, {Component, PureComponent} from 'react';
+import {connect} from 'react-redux';
 
 import './Layout.css';
 
@@ -12,11 +13,17 @@ export function RowLayout(props) {
     )
 }
 
-export function VerticalLayout(props) {
+function _VerticalLayout(props) {
     return (
-        <div className="layout-vertical">
+        <div className={'layout-vertical'+(props.hide_text ? ' score-hide' : '')}>
             <div className="layout-vertical-up">{props.up}</div>
             <div className="layout-vertical-down">{props.down}</div>
         </div>
     )
 }
+
+let state_to_props=(state,ownProps)=>({
+    hide_text: state.display_switch.hide_text && ownProps.need_hide_text,
+});
+
+export let VerticalLayout=connect(state_to_props)(_VerticalLayout);

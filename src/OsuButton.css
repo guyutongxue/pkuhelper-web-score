@@ -8,22 +8,24 @@
     margin: 1em;
     font-size: 2em;
     transition: transform .15s ease-out, opacity .15s ease-out;
-    background-color: hsl(120,60%,50%);
+    background-color: hsl(120,80%,50%);
     color: white;
     text-shadow: 0 0 3px black;
     box-shadow: 0 0 3px black;
     border: 5px solid white;
     border-radius: 50%;
     cursor: pointer;
+    outline: none !important;
 }
 .osu-button:hover {
     transform: scale(1.2);
 }
 .osu-button:active {
-    transform: scale(1);
+    transform: scale(1) translateY(.2em);
     opacity: .9;
 }
 .osu-button:disabled {
     transform: scale(.8);
     opacity: .6;
+    cursor: not-allowed;
 }

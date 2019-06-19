@@ -1,5 +1,7 @@
 .layout-row {
     display: flex;
+    height: 2.65em;
+    overflow: hidden;
     padding-top: .25em;
     padding-bottom: .25em;
     color: black;
@@ -18,16 +20,23 @@
     padding: 0 .5em;
 }
 .layout-row-right {
-    flex: 0 0 4em;
+    flex: 0 0 3em;
     text-align: center;
 }
 
 .layout-vertical {
-
+    transition: opacity .15s ease-out;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .layout-vertical-up {
 
 }
 .layout-vertical-down {
     font-size: 60%;
+    line-height: 1.5em;
+}
+
+.score-hide {
+    opacity: 0;
 }

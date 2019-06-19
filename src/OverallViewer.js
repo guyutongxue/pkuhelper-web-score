@@ -18,10 +18,10 @@ function OverallViewer(props) {
                     <VerticalLayout up="总绩点" down="……" />
                 }
                 right={
-                    <VerticalLayout up={sem_gpa.toFixed(3)} down={fix(sem_score,1)} />
+                    <VerticalLayout up={sem_gpa.toFixed(2)} down={fix(sem_score,1)} need_hide_text />
                 }
                 style={{
-                    backgroundColor: colorize_semester(sem_score),
+                    backgroundColor: colorize_semester(sem_score,props.judge_by_gpa),
                 }}
             />
         </div>
@@ -30,6 +30,7 @@ function OverallViewer(props) {
 
 let state_to_props=(state,ownProps)=>({
     courses: state.data.courses,
+    judge_by_gpa: state.display_switch.judge_by_gpa,
 });
 
 export default connect(state_to_props)(OverallViewer);

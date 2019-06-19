@@ -4,6 +4,10 @@ const INIT_STATE={
     loading_status: 'not_init',
     isop_token: null,
     data: null,
+    display_switch: {
+        hide_text: false,
+        judge_by_gpa: false,
+    },
 };
 
 export function reduce(state=INIT_STATE,action) {
@@ -46,6 +50,14 @@ export function reduce(state=INIT_STATE,action) {
                 data: parse_score(action.data),
                 loading_status: 'done',
                 error: null,
+            };
+
+        case 'toggle_switch':
+            return {
+                ...state,
+                display_switch: Object.assign({},state.display_switch,{
+                    [action.name]: !state.display_switch[action.name]
+                })
             };
 
         default:

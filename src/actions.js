@@ -49,3 +49,10 @@ export function do_load() {
         }
     };
 }
+
+export function toggle_switch(name) {
+    return {
+        type: 'toggle_switch',
+        name: name,
+    }
+}
