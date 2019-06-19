@@ -2,6 +2,7 @@ import React, {Component, PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {do_init, do_load} from './actions';
 import Viewer from './Viewer';
+import OsuButton from './OsuButton';
 
 class App extends Component {
     constructor(props) {
@@ -13,22 +14,19 @@ class App extends Component {
     }
     render() {
         if(this.props.loading_status==='not_init')
-            return 'not init';
+            return (<OsuButton text="" button_text="…" disabled />);
         else if(this.props.loading_status==='initing')
-            return 'initing';
+            return (<OsuButton text="正在初始化……" button_text="…" disabled />);
         else if(this.props.loading_status==='init_error')
-            return this.props.error;
+            return (<OsuButton text={this.props.error} button_text="!" disabled />);
         else if(this.props.loading_status==='ready')
             return (
-                <div>
-                    ready
-                    <button onClick={this.props.do_load()}>load</button>
-                </div>
+                <OsuButton text="点击按钮查询成绩" button_text="查询" onClick={this.props.do_load} />
             );
         else if(this.props.loading_status==='loading')
-            return 'loading';
+            return (<OsuButton text="正在查询……" button_text="…" disabled />);
         else if(this.props.loading_status==='load_error')
-            return this.props.error;
+            return (<OsuButton text={this.props.error} button_text="!" disabled />);
         else if(this.props.loading_status==='done')
             return <Viewer />;
         else

@@ -1,0 +1,12 @@
+.semester-block {
+    margin-top: 2em;
+}
+.semester-block>*:first-child {
+    box-shadow: 0 2px 10px black;
+    position: relative;
+    z-index: 10;
+}
+.semester-block>*:not(:first-child) {
+    margin-left: 1em;
+    margin-right: 1em;
+}

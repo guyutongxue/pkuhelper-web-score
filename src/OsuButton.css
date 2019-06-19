@@ -1,0 +1,29 @@
+.osu-frame {
+    text-align: center;
+    padding-top: 3em;
+}
+.osu-button {
+    height: 6em;
+    width: 6em;
+    margin: 1em;
+    font-size: 2em;
+    transition: transform .15s ease-out, opacity .15s ease-out;
+    background-color: hsl(120,60%,50%);
+    color: white;
+    text-shadow: 0 0 3px black;
+    box-shadow: 0 0 3px black;
+    border: 5px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.osu-button:hover {
+    transform: scale(1.2);
+}
+.osu-button:active {
+    transform: scale(1);
+    opacity: .9;
+}
+.osu-button:disabled {
+    transform: scale(.8);
+    opacity: .6;
+}

@@ -19,6 +19,14 @@ const STATIC_GPA={
     'D': 1,
     'F': 0,
 };
+const DESCRIPTION={
+    'P': '通过',
+    'NP': '未通过',
+    'EX': '免修',
+    'IP': '跨学期',
+    'I': '缓考',
+    'W': '退课',
+};
 
 function normalize_score_from_isop(score) {
     if(score==='合格') return 'P';
@@ -67,9 +75,17 @@ export function parse_score(json) {
             };
         semesters[sem].course_list.push(idx);
     });
+    Object.values(semesters).forEach((sem)=>{
+        sem.course_list=sem.course_list.sort((id1,id2)=>{
+            let g1=courses[id1].gpa;
+            let g2=courses[id2].gpa;
+            console.log(g1,g2);
+            return g2-g1;
+        });
+    });
 
     let semesters_li=Object.values(semesters).sort((c1,c2)=>(
-        c1.year!==c2.year ? c1.year>c2.year : c1.semester>c2.semester
+        c1.year!==c2.year ? c2.year-c1.year : c2.semester-c1.semester
     ));
 
     return {
@@ -86,7 +102,6 @@ export function calc_avg_gpa(courses,li) {
         let co=courses[idx];
         let gpa=course_gpa_from_normalized_score(co.score);
         if(gpa!==null) {
-            console.log(co.credit,gpa,tot_credit,tot_gpa);
             tot_credit+=co.credit;
             tot_gpa+=co.credit*gpa;
         }
@@ -95,4 +110,29 @@ export function calc_avg_gpa(courses,li) {
         return tot_gpa/tot_credit;
     else
         return NaN;
+}
+
+export function sum_credit(courses,li) {
+    let tot_credit=0;
+    li.forEach((idx)=>{
+        tot_credit+=courses[idx].credit;
+    });
+    return tot_credit;
+}
+
+const SQRT3=Math.sqrt(3);
+export function guess_score_from_gpa(gpa) {
+    if(gpa>=4) return 100;
+    else if(gpa>=1) return (-40*SQRT3*Math.sqrt(4-gpa)+300)/3;
+    else return 'F';
+}
+
+export function fix(num,dig) { // without trailing 0 and trailing point
+    if(typeof num!=='number') return num;
+    let s=num.toFixed(dig);
+    return s.replace(/^(.*?)0+$/,'$1').replace(/\.$/,'');
+}
+
+export function describe(score) {
+    return DESCRIPTION[score];
 }

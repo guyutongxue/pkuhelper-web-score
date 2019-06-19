@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import ReactDOM from 'react-dom';
 
 import App from './App';
+import Title from './Title';
 import {reduce} from './reducers';
 
 import './index.css';
@@ -16,7 +17,10 @@ let store=applyMiddleware(thunk)(createStore)(
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Title />
+        <div className="container">
+            <App />
+        </div>
     </Provider>,
     document.getElementById('root')
 );
