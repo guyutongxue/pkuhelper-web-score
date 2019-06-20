@@ -9,10 +9,10 @@ import './Viewer.css';
 function Viewer(props) {
     return (
         <div className="viewer">
+            <OverallViewer />
             {props.data.semesters.map((sem)=>(
                 <SemesterViewer sem={sem} key={sem.name} />
             ))}
-            <OverallViewer />
         </div>
     );
 }

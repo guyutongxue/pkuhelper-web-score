@@ -6,3 +6,33 @@
     position: relative;
     transition: width .15s ease-out;
 }
+
+.score-tamperer {
+    background-color: transparent;
+    border: 0;
+    font-family: unset;
+    text-align: center;
+    width: 3em;
+    font-size: unset;
+    text-decoration: unset;
+    text-shadow: 0 0 2px white;
+}
+.score-tamperer:not(:focus) {
+    cursor: pointer;
+}
+
+.tampered-badge {
+    display: inline-block;
+    text-decoration: none !important;
+    color: red;
+    cursor: pointer;
+    padding: 0 .25em;
+    border-radius: .25em;
+}
+.tampered-badge:hover {
+    background-color: red;
+    color: white;
+}
+.row-tampered * {
+    text-decoration: line-through rgba(255,0,0,.5);
+}

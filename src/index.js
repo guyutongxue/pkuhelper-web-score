@@ -3,10 +3,11 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import ReactDOM from 'react-dom';
+import {reduce} from './reducers';
 
 import App from './App';
 import Title from './Title';
-import {reduce} from './reducers';
+import Footer from './Footer';
 
 import './index.css';
 
@@ -20,6 +21,7 @@ ReactDOM.render(
         <Title />
         <div className="container">
             <App />
+            <Footer />
         </div>
     </Provider>,
     document.getElementById('root')

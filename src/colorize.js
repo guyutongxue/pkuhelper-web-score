@@ -14,7 +14,7 @@ export function colorize_semester(score,judge_by_gpa) {
 }
 
 export function colorize_course(score,judge_by_gpa) {
-    if(isNaN(score)) return 'hsl(0,0%,70%)';
+    if(isNaN(score) || score<60) return 'hsl(0,0%,70%)';
     return `hsl(${120*prec(score,judge_by_gpa)},60%,50%)`
 }
 

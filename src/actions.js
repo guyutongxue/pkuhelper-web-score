@@ -1,4 +1,5 @@
 import {get_isop_token,get_score} from './scores_api';
+import {check_score} from './score_parser';
 
 export function do_init() {
     return (dispatch)=>{
@@ -54,5 +55,22 @@ export function toggle_switch(name) {
     return {
         type: 'toggle_switch',
         name: name,
+    }
+}
+
+export function tamper_score(idx,score) {
+    score=score.toUpperCase();
+    if(!check_score(score)) return {type: null};
+    return {
+        type: 'tamper_score',
+        idx: idx,
+        score: score,
+    }
+}
+
+export function untamper_score(idx) {
+    return {
+        type: 'untamper_score',
+        idx: idx===undefined ? null : idx,
     }
 }

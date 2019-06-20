@@ -5,7 +5,7 @@
     padding-top: .25em;
     padding-bottom: .25em;
     color: black;
-    text-shadow: 0 0 3px white;
+    text-shadow: 0 0 2px white;
 }
 .layout-row>* {
     z-index: 5;

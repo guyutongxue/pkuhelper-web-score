@@ -13,7 +13,7 @@ class App extends Component {
         if(this.props.loading_status==='not_init')
             this.props.do_init();
     }
-    render() {
+    render_viewer() {
         if(this.props.loading_status==='not_init')
             return (<OsuButton text="" button_text="…" disabled />);
         else if(this.props.loading_status==='initing')
@@ -29,14 +29,17 @@ class App extends Component {
         else if(this.props.loading_status==='load_error')
             return (<OsuButton text={this.props.error} button_text="!" disabled />);
         else if(this.props.loading_status==='done')
-            return (
-                <div>
-                    <Controller />
-                    <Viewer />
-                </div>
-            );
+            return (<Viewer />);
         else
             return null;
+    }
+    render() {
+        return (
+            <div>
+                <Controller />
+                {this.render_viewer()}
+            </div>
+        );
     }
 }
 

@@ -34,6 +34,14 @@ function normalize_score_from_isop(score) {
     else if(!isNaN(score)) return parseFloat(score);
     else return score;
 }
+export function check_score(score) {
+    if(!isNaN(score)) {
+        score=parseFloat(score);
+        return score<=100.001 && score>=-.001;
+    } else {
+        return STATIC_GPA[score]!==undefined;
+    }
+}
 
 export function course_gpa_from_normalized_score(score) {
     if(!isNaN(score)) {
@@ -50,13 +58,13 @@ export function course_gpa_from_normalized_score(score) {
 function parse_teacher(line) {
     //"0006183063-熊校良$信息学院$助理研究员,0006172171-宋今$信息学院$馆员,0006181061-卢亮$新闻学院$副教授,0006182105-李子奇$信息学院$助理研究员,1006184103-王一涵$团委$讲师"
     let parts=line.split(',');
-    if(line==='' || parts.length===0) return '???';
+    if(line==='' || parts.length===0) return '（无教师信息）';
 
     let teacher=parts[0];
     let res=/^\d+-([^$]+)\$([^$]+)\$([^$]+)$/.exec(teacher);
 
     if(res)
-        return `${res[1]}（${res[2]} ${res[3]}）${parts.length>1 ? '等'+parts.length+'人' : ''}`;
+        return `${res[1]}（${res[2]}）${parts.length>1 ? '等'+parts.length+'人' : ''}`;
     else
         return `${teacher}${parts.length>1 ? ' 等'+parts.length+'人' : ''}`;
 }
@@ -67,9 +75,9 @@ export function parse_score(json) {
     let yjs=json.xslb==='yjs';
     let courses=json.cjxx.map((row)=>{
         let score=normalize_score_from_isop(yjs ? row.cj : row.xqcj);
-        let gpa=course_gpa_from_normalized_score(score);//yjs ? null : row.jd;
         let details=yjs ? `${row.kclb}` : `${row.kclbmc} - ${parse_teacher(row.skjsxm)}`;
         return {
+            course_id: row.kch,
             year: row.xnd,
             semester: row.xq,
             sem_name: `${row.xnd}-${row.xq}`,
@@ -77,8 +85,6 @@ export function parse_score(json) {
             credit: parseFloat(row.xf),
             score: score,
             true_score: score,
-            gpa: gpa,
-            true_gpa: gpa,
             details: details,
         }
     });
@@ -94,13 +100,6 @@ export function parse_score(json) {
                 course_list: [],
             };
         semesters[sem].course_list.push(idx);
-    });
-    Object.values(semesters).forEach((sem)=>{
-        sem.course_list=sem.course_list.sort((id1,id2)=>{
-            let g1=courses[id1].gpa;
-            let g2=courses[id2].gpa;
-            return g2-g1;
-        });
     });
 
     let semesters_li=Object.values(semesters).sort((c1,c2)=>(
@@ -153,5 +152,11 @@ export function fix(num,dig) { // without trailing 0 and trailing point
 }
 
 export function describe(score) {
-    return DESCRIPTION[score];
+    return DESCRIPTION[score]||'-.--';
+}
+
+export function score_tampered(courses) {
+    return courses.some((co)=>(
+        (''+co.score)!==(''+co.true_score)
+    ));
 }

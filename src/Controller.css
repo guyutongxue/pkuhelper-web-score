@@ -1,6 +1,7 @@
 .controller-bar {
-    margin-top: 2em;
+    margin-top: 2rem;
     text-align: center;
+    font-size: .8em;
 }
 
 .controller-bar a {

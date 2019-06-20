@@ -7,7 +7,7 @@ export default function Title(props) {
     return (
         <div className="title-bar">
             <AppSwitcher appid="score" />
-            <GlobalTitle text="成绩查询" />
+            <GlobalTitle text={<span>成绩查询<sup> β</sup></span>} />
         </div>
     )
 }

@@ -60,6 +60,33 @@ export function reduce(state=INIT_STATE,action) {
                 })
             };
 
+        case 'tamper_score':
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    courses: state.data.courses.map((co,idx)=>
+                        idx===action.idx ? {
+                            ...co,
+                            score: action.score,
+                        } : co
+                    ),
+                },
+            };
+        case 'untamper_score':
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    courses: state.data.courses.map((co,idx)=>
+                        (action.idx===null || idx===action.idx) ? {
+                            ...co,
+                            score: co.true_score,
+                        } : co
+                    ),
+                },
+            };
+
         default:
             return state;
     }

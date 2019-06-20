@@ -3,8 +3,10 @@
 }
 .semester-block>*:first-child {
     box-shadow: 0 0 10px black;
-    position: relative;
+
     z-index: 10;
+    position: sticky;
+    top: 0;
 }
 .semester-block>*:not(:first-child) {
     margin-left: 1em;
