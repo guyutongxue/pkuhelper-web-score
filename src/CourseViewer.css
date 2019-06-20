@@ -15,7 +15,10 @@
     width: 3em;
     font-size: unset;
     text-decoration: unset;
-    text-shadow: 0 0 2px white;
+    text-shadow: 0 0 3px white;
+    line-height: 1em;
+    padding: 0;
+    margin: 0;
 }
 .score-tamperer:not(:focus) {
     cursor: pointer;

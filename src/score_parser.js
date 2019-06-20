@@ -17,7 +17,7 @@ const STATIC_GPA={
     'C-': 1.7,
     'D+': 1.3,
     'D': 1,
-    'F': 0,
+    'F': null, // 0
 };
 const DESCRIPTION={
     'P': '通过',
