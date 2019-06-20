@@ -19,7 +19,7 @@ function OverallViewer(props) {
                         <VerticalLayout up={fix(sem_credit,1)} down="学分" />
                     }
                     middle={
-                        <VerticalLayout up="总绩点" down="……" />
+                        <VerticalLayout up="总绩点" down={`共 ${props.courses.length} 门课程 - 官方 GPA：${props.isop_gpa}`} />
                     }
                     right={
                         <VerticalLayout up={sem_gpa.toFixed(2)} down={fix(sem_score,1)} need_hide_text />
@@ -36,6 +36,7 @@ function OverallViewer(props) {
 let state_to_props=(state,ownProps)=>({
     courses: state.data.courses,
     judge_by_gpa: state.display_switch.judge_by_gpa,
+    isop_gpa: state.data.isop_gpa,
 });
 
 export default connect(state_to_props)(OverallViewer);

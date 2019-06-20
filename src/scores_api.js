@@ -4,8 +4,8 @@ import md5 from 'md5';
 
 export function get_isop_token() {
     return new Promise((resolve,reject)=>{
-        let user_token=encodeURIComponent(localStorage['TOKEN']);
-        if(!user_token) reject('no user token');
+        let user_token=encodeURIComponent(localStorage['TOKEN']||'');
+        if(!user_token) reject('请前往树洞登录账号');
 
         fetch(PKUHELPER_ROOT+'api_xmcp/score/get_isop_token?user_token='+user_token)
             .then(get_json)

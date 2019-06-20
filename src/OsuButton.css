@@ -28,3 +28,6 @@
     opacity: .6;
     cursor: not-allowed;
 }
+.osu-button:disabled+.osu-text {
+    color: yellow;
+}

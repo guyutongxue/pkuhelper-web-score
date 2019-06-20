@@ -8,7 +8,7 @@ export default function OsuButton(props) {
             <button className="osu-button" disabled={props.disabled} onClick={props.onClick}>
                 {props.button_text}
             </button>
-            <p>{props.text}</p>
+            <p className="osu-text">{props.text}</p>
         </div>
     )
 }

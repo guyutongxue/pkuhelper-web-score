@@ -35,7 +35,7 @@ function SemesterViewer(props) {
                         <VerticalLayout up={fix(sem_credit,1)} down="学分" />
                     }
                     middle={
-                        <VerticalLayout up={props.sem.name} down="……" />
+                        <VerticalLayout up={props.sem.name} down={`共 ${props.sem.course_list.length} 门课程`} />
                     }
                     right={
                         <VerticalLayout up={sem_gpa.toFixed(2)} down={fix(sem_score,1)} need_hide_text />
