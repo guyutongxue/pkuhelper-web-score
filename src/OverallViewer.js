@@ -19,7 +19,11 @@ function OverallViewer(props) {
                         <VerticalLayout up={fix(sem_credit,1)} down="学分" />
                     }
                     middle={
-                        <VerticalLayout up="总绩点" down={`共 ${props.courses.length} 门课程 - 官方 GPA：${props.isop_gpa}`} />
+                        <VerticalLayout
+                            up="总绩点"
+                            down={`共 ${props.courses.length} 门课程，官方 GPA：${props.isop_gpa}`}
+                            need_hide_text
+                        />
                     }
                     right={
                         <VerticalLayout up={sem_gpa.toFixed(2)} down={fix(sem_score,1)} need_hide_text />
