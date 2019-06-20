@@ -36,3 +36,7 @@ export function colorize_backbar(score,judge_by_gpa) {
     }
     return [color,width];
 }
+
+export function colorize_new_block() {
+    return 'hsl(0,0%,90%)';
+}

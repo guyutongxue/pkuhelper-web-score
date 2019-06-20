@@ -10,12 +10,20 @@ import {
 } from './score_parser';
 import CourseViewer from './CourseViewer';
 import {RowLayout, VerticalLayout} from './Layout';
-import {colorize_semester} from './colorize';
+import {colorize_semester, colorize_new_block} from './colorize';
+import {read_all} from './actions';
 
 import './SemesterViewer.css';
 
+function ReadAllButton(props) {
+    return (
+        <button onClick={props.onClick} className="read-all-button">已阅</button>
+    );
+}
 
 function SemesterViewer(props) {
+    let is_new_block=props.sem._new_block===true;
+
     let sem_credit=sum_credit(props.courses,props.sem.course_list);
     let sem_gpa=calc_avg_gpa(props.courses,props.sem.course_list);
     let sem_score=guess_score_from_gpa(sem_gpa);
@@ -38,10 +46,12 @@ function SemesterViewer(props) {
                         <VerticalLayout up={props.sem.name} down={`共 ${props.sem.course_list.length} 门课程`} />
                     }
                     right={
-                        <VerticalLayout up={sem_gpa.toFixed(2)} down={fix(sem_score,1)} need_hide_text />
+                        is_new_block ?
+                            <ReadAllButton onClick={props.read_all} /> :
+                            <VerticalLayout up={sem_gpa.toFixed(2)} down={fix(sem_score,1)} need_hide_text />
                     }
                     style={{
-                        backgroundColor: colorize_semester(sem_score,props.judge_by_gpa),
+                        backgroundColor: is_new_block ? colorize_new_block() : colorize_semester(sem_score,props.judge_by_gpa),
                     }}
                 />
             </div>
@@ -56,5 +66,8 @@ let state_to_props=(state,ownProps)=>({
     courses: state.data.courses,
     judge_by_gpa: state.display_switch.judge_by_gpa,
 });
+let dispatch_to_props=(dispatch)=>({
+    read_all: ()=>dispatch(read_all()),
+});
 
-export default connect(state_to_props)(SemesterViewer);
+export default connect(state_to_props,dispatch_to_props)(SemesterViewer);

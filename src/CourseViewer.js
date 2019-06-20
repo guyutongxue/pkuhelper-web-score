@@ -21,13 +21,11 @@ class ScoreTamperer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('!recv score',nextProps.score);
         if(this.editor_ref.current)
             this.editor_ref.current.value=nextProps.score;
     }
 
     on_blur() {
-        console.log('!input val',this.editor_ref.current.value);
         this.props.onChange(this.editor_ref.current.value);
         this.editor_ref.current.value=this.props.score; // will be changed from componentWillReceiveProps if score is valid
     }

@@ -1,5 +1,6 @@
 import {get_isop_token,get_score} from './scores_api';
 import {check_score} from './score_parser';
+import {shown_score_helper} from './shown_score_helper';
 
 export function do_init() {
     return (dispatch)=>{
@@ -73,4 +74,13 @@ export function untamper_score(idx) {
         type: 'untamper_score',
         idx: idx===undefined ? null : idx,
     }
+}
+
+export function read_all() {
+    return (dispatch)=>{
+        shown_score_helper.apply();
+        return dispatch({
+            type: 'read_all',
+        });
+    };
 }

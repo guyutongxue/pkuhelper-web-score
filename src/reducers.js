@@ -8,6 +8,7 @@ const INIT_STATE={
         hide_text: false,
         judge_by_gpa: false,
     },
+    raw_data: null,
 };
 
 export function reduce(state=INIT_STATE,action) {
@@ -49,6 +50,7 @@ export function reduce(state=INIT_STATE,action) {
                 ...state,
                 data: parse_score(action.data),
                 loading_status: 'done',
+                raw_data: action.data,
                 error: null,
             };
 
@@ -85,6 +87,14 @@ export function reduce(state=INIT_STATE,action) {
                         } : co
                     ),
                 },
+            };
+
+        case 'read_all':
+            return {
+                ...state,
+                data: parse_score(state.raw_data),
+                loading_status: 'done',
+                error: null,
             };
 
         default:

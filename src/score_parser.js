@@ -1,3 +1,5 @@
+import {shown_score_helper} from './shown_score_helper';
+
 const STATIC_GPA={
     'P': null,
     'NP': null,
@@ -71,6 +73,7 @@ function parse_teacher(line) {
 
 export function parse_score(json) {
     console.log(json);
+    let shown=shown_score_helper.get();
 
     let yjs=json.xslb==='yjs';
     let courses=json.cjxx.map((row)=>{
@@ -78,8 +81,8 @@ export function parse_score(json) {
         let details=yjs ? `${row.kclb}` : `${row.kclbmc} - ${parse_teacher(row.skjsxm)}`;
         return {
             course_id: row.kch,
-            year: row.xnd,
-            semester: row.xq,
+            year: parseInt(row.xnd),
+            semester: parseInt(row.xq),
             sem_name: `${row.xnd}-${row.xq}`,
             name: row.kcmc,
             credit: parseFloat(row.xf),
@@ -88,6 +91,14 @@ export function parse_score(json) {
             details: details,
         }
     });
+
+    let sem_new={
+        name: '新增成绩',
+        year: 9102,
+        semester: 4,
+        _new_block: true,
+        course_list: [],
+    };
 
     let semesters={};
     courses.forEach((course,idx)=>{
@@ -100,7 +111,15 @@ export function parse_score(json) {
                 course_list: [],
             };
         semesters[sem].course_list.push(idx);
+
+        if(!shown.includes(course.course_id))
+            sem_new.course_list.push(idx);
     });
+
+    if(shown.length && sem_new.course_list.length)
+        semesters['new']=sem_new;
+
+    shown_score_helper.set(courses.map((c)=>c.course_id));
 
     let semesters_li=Object.values(semesters).sort((c1,c2)=>(
         c1.year!==c2.year ? c2.year-c1.year : c2.semester-c1.semester
@@ -142,7 +161,7 @@ const SQRT3=Math.sqrt(3);
 export function guess_score_from_gpa(gpa) {
     if(gpa>=4) return 100;
     else if(gpa>=1) return (-40*SQRT3*Math.sqrt(4-gpa)+300)/3;
-    else return 'F';
+    else return '--.-';
 }
 
 export function fix(num,dig) { // without trailing 0 and trailing point
