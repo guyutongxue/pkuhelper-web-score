@@ -12,20 +12,3 @@
     margin-left: 1em;
     margin-right: 1em;
 }
-
-.read-all-button {
-    height: 1.65em;
-    width: 4em;
-    font-size: 1em;
-    margin: .25em .5em;
-    background-color: white;
-    color: black;
-    border: 1px solid black;
-    border-radius: .25em;
-    cursor: pointer;
-    outline: none !important;
-}
-.read-all-button:hover {
-    background-color: black;
-    color: white;
-}

@@ -53,8 +53,10 @@ function TamperedBadge(props) {
 }
 
 function CourseViewer(props) {
-    let gpa=course_gpa_from_normalized_score(props.course.score);
     let tampered=score_tampered([props.course]);
+    let gpa=course_gpa_from_normalized_score(props.course.score);
+
+    if(!tampered && gpa!==null && !isNaN(props.course.isop_gpa)) gpa=parseFloat(props.course.isop_gpa);
 
     return (
         <div className={tampered ? 'row-tampered' : ''}>

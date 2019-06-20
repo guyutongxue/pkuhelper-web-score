@@ -23,7 +23,7 @@ export function do_init() {
     };
 }
 
-export function do_load() {
+export function do_load(is_auto=false) {
     return (dispatch,getState)=>{
         let {isop_token}=getState();
         if(isop_token) {
@@ -35,6 +35,7 @@ export function do_load() {
                     dispatch({
                         type: 'load_done',
                         data: res,
+                        is_auto: is_auto,
                     })
                 })
                 .catch((err)=>{
@@ -60,6 +61,8 @@ export function toggle_switch(name) {
 }
 
 export function tamper_score(idx,score) {
+    score=score.trim();
+    if(score.length>4) return {type: null};
     score=score.toUpperCase();
     if(!check_score(score)) return {type: null};
     return {

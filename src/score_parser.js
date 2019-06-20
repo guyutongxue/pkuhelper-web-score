@@ -88,17 +88,12 @@ export function parse_score(json) {
             credit: parseFloat(row.xf),
             score: score,
             true_score: score,
+            isop_gpa: row.jd!==undefined ? row.jd : course_gpa_from_normalized_score(score),
             details: details,
         }
     });
 
-    let sem_new={
-        name: '新增成绩',
-        year: 9102,
-        semester: 4,
-        _new_block: true,
-        course_list: [],
-    };
+    let new_block_list=[];
 
     let semesters={};
     courses.forEach((course,idx)=>{
@@ -113,11 +108,11 @@ export function parse_score(json) {
         semesters[sem].course_list.push(idx);
 
         if(!shown.includes(course.course_id))
-            sem_new.course_list.push(idx);
+            new_block_list.push(idx);
     });
 
-    if(shown.length && sem_new.course_list.length)
-        semesters['new']=sem_new;
+    if(shown.length===0) // first view
+        new_block_list=[];
 
     shown_score_helper.set(courses.map((c)=>c.course_id));
 
@@ -129,6 +124,7 @@ export function parse_score(json) {
         courses: courses,
         isop_gpa: json.gpa.gpa,
         semesters: semesters_li,
+        new_block: new_block_list,
     };
 }
 

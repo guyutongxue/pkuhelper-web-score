@@ -80,7 +80,7 @@ let state_to_props=(state)=>({
 });
 let dispatch_to_props=(dispatch)=>({
     do_switch: (name)=>dispatch(toggle_switch(name)),
-    do_refresh: ()=>dispatch(do_load()),
+    do_refresh: ()=>dispatch(do_load(true)),
 });
 
 export default connect(state_to_props,dispatch_to_props)(Controller);

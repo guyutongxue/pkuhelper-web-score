@@ -48,7 +48,10 @@ export function reduce(state=INIT_STATE,action) {
         case 'load_done':
             return {
                 ...state,
-                data: parse_score(action.data),
+                data: {
+                    ...parse_score(action.data),
+                    is_auto: action.is_auto,
+                },
                 loading_status: 'done',
                 raw_data: action.data,
                 error: null,
