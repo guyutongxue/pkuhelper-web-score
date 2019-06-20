@@ -11,6 +11,10 @@ import Footer from './Footer';
 
 import './index.css';
 
+// polyfill
+if(!window.Object.values)
+    window.Object.values=(o)=>Object.keys(o).map(k=>o[k]);
+
 let store=applyMiddleware(thunk)(createStore)(
     reduce,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
