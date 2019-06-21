@@ -34,7 +34,7 @@ let state_to_props=(state)=>({
     last_load_timestamp: state.last_load_timestamp,
 });
 let dispatch_to_props=(dispatch)=>({
-    do_refresh: ()=>dispatch(do_load(true)),
+    do_refresh: ()=>dispatch(do_load()),
 });
 
 export default connect(state_to_props,dispatch_to_props)(Viewer);
