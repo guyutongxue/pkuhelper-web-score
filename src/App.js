@@ -27,7 +27,7 @@ class App extends Component {
         else if(this.props.loading_status==='loading')
             return (<OsuButton text="正在查询……" button_text="…" disabled />);
         else if(this.props.loading_status==='load_error')
-            return (<OsuButton text={'查询失败，请刷新或注销后重新登录。'+this.props.error} button_text="!" disabled />);
+            return (<OsuButton text={'查询失败。'+this.props.error} button_text="重试" onClick={this.props.do_load} />);
         else if(this.props.loading_status==='done')
             return (<Viewer />);
         else

@@ -9,6 +9,7 @@ const INIT_STATE={
         judge_by_gpa: false,
     },
     raw_data: null,
+    last_load_timestamp: null,
 };
 
 export function reduce(state=INIT_STATE,action) {
@@ -55,6 +56,7 @@ export function reduce(state=INIT_STATE,action) {
                 loading_status: 'done',
                 raw_data: action.data,
                 error: null,
+                last_load_timestamp: action.timestamp,
             };
 
         case 'toggle_switch':

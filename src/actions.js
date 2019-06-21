@@ -36,6 +36,7 @@ export function do_load(is_auto=false) {
                         type: 'load_done',
                         data: res,
                         is_auto: is_auto,
+                        timestamp: +new Date(),
                     })
                 })
                 .catch((err)=>{

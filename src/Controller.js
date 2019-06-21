@@ -65,11 +65,11 @@ function Controller(props) {
             <AutoRefreshController fire={props.do_refresh} />
             &nbsp;/&nbsp;
             <a onClick={()=>props.do_switch('hide_text')}>
-                {props.display_switch.hide_text ? '截图模式' : '查看模式'}
+                {props.display_switch.hide_text ? '显示文字' : '隐藏文字'}
             </a>
             &nbsp;/&nbsp;
             <a onClick={()=>props.do_switch('judge_by_gpa')}>
-                {props.display_switch.judge_by_gpa ? '四分制着色' : '百分制着色'}
+                {props.display_switch.judge_by_gpa ? '百分制着色' : '四分制着色'}
             </a>
         </p>
     );
