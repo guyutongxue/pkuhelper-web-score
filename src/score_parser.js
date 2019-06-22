@@ -63,7 +63,7 @@ function parse_teacher(line) {
     if(line==='' || parts.length===0) return '（无教师信息）';
 
     let teacher=parts[0];
-    let res=/^\d+-([^$]+)\$([^$]+)\$([^$]+)$/.exec(teacher);
+    let res=/^[^-]+-([^$]+)\$([^$]+)\$([^$]+)$/.exec(teacher);
 
     if(res)
         return `${res[1]}（${res[2]}）${parts.length>1 ? '等'+parts.length+'人' : ''}`;
