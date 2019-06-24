@@ -36,6 +36,7 @@ function normalize_score_from_isop(score) {
     else if(!isNaN(score)) return parseFloat(score);
     else return score;
 }
+
 export function check_score(score) {
     if(!isNaN(score)) {
         score=parseFloat(score);
@@ -55,6 +56,17 @@ export function course_gpa_from_normalized_score(score) {
         return STATIC_GPA[score];
     } else
         return null;
+}
+
+export function is_special_credit(score) { // should calc into total credit
+    return score==='P' || score==='EX';
+}
+export function is_fail(score) { // should be colored as failed
+    return score==='NP' || score==='F' || (!isNaN(score) && score<60);
+}
+
+function should_calc_credit(score) {
+    return is_special_credit(score) || course_gpa_from_normalized_score(score)!==null
 }
 
 function parse_teacher(line) {
@@ -142,13 +154,14 @@ export function calc_avg_gpa(courses,li) {
     if(tot_credit)
         return tot_gpa/tot_credit;
     else
-        return NaN;
+        return null;
 }
 
 export function sum_credit(courses,li) {
     let tot_credit=0;
     li.forEach((idx)=>{
-        tot_credit+=courses[idx].credit;
+        if(should_calc_credit(courses[idx].score))
+            tot_credit+=courses[idx].credit;
     });
     return tot_credit;
 }

@@ -26,7 +26,7 @@ function OverallViewer(props) {
                         />
                     }
                     right={
-                        <VerticalLayout up={sem_gpa.toFixed(2)} down={fix(sem_score,1)} need_hide_text />
+                        <VerticalLayout up={sem_gpa!==null ? sem_gpa.toFixed(2) : '-.--'} down={fix(sem_score,1)} need_hide_text />
                     }
                     style={{
                         backgroundColor: colorize_semester(sem_score,props.judge_by_gpa),

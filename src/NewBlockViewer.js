@@ -1,6 +1,6 @@
 import React, {Component, PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {course_gpa_from_normalized_score, score_tampered} from './score_parser';
+import {course_gpa_from_normalized_score, score_tampered, is_fail} from './score_parser';
 import CourseViewer from './CourseViewer';
 import {RowLayout, VerticalLayout} from './Layout';
 import {colorize_new_block} from './colorize';
@@ -41,7 +41,9 @@ class NewBlockViewer extends Component {
         let sorted_course_list=props.course_list.sort((id1,id2)=>{
             let s1=course_gpa_from_normalized_score(props.courses[id1].score);
             let s2=course_gpa_from_normalized_score(props.courses[id2].score);
-            return s2!==s1 ? s2-s1 : id2-id1;
+            let f1=is_fail(props.courses[id1].score);
+            let f2=is_fail(props.courses[id2].score);
+            return s2!==s1 ? s2-s1 : f1!==f2 ? f2-f1 : id2-id1;
         });
 
         return (

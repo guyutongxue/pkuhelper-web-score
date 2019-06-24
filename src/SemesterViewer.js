@@ -6,7 +6,7 @@ import {
     guess_score_from_gpa,
     fix,
     course_gpa_from_normalized_score,
-    score_tampered
+    score_tampered, is_fail
 } from './score_parser';
 import CourseViewer from './CourseViewer';
 import {RowLayout, VerticalLayout} from './Layout';
@@ -23,7 +23,9 @@ function SemesterViewer(props) {
     let sorted_course_list=props.sem.course_list.sort((id1,id2)=>{
         let s1=course_gpa_from_normalized_score(props.courses[id1].score);
         let s2=course_gpa_from_normalized_score(props.courses[id2].score);
-        return s2!==s1 ? s2-s1 : id2-id1;
+        let f1=is_fail(props.courses[id1].score);
+        let f2=is_fail(props.courses[id2].score);
+        return s2!==s1 ? s2-s1 : f1!==f2 ? f2-f1 : id2-id1;
     });
 
     return (
@@ -37,7 +39,7 @@ function SemesterViewer(props) {
                         <VerticalLayout up={props.sem.name} down={`共 ${props.sem.course_list.length} 门课程`} />
                     }
                     right={
-                        <VerticalLayout up={sem_gpa.toFixed(2)} down={fix(sem_score,1)} need_hide_text />
+                        <VerticalLayout up={sem_gpa!==null ? sem_gpa.toFixed(2) : '-.--'} down={fix(sem_score,1)} need_hide_text />
                     }
                     style={{
                         backgroundColor: colorize_semester(sem_score,props.judge_by_gpa),

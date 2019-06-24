@@ -1,4 +1,4 @@
-import {course_gpa_from_normalized_score,guess_score_from_gpa} from './score_parser';
+import {course_gpa_from_normalized_score, guess_score_from_gpa, is_fail} from './score_parser';
 
 function prec(score,judge_by_gpa) {
     if(judge_by_gpa) {
@@ -15,23 +15,23 @@ function cannot_judge(score) {
 }
 
 export function colorize_semester(score,judge_by_gpa) {
-    if(cannot_judge(score)) return 'hsl(0,100%,65%)';
-    return `hsl(${120*prec(score,judge_by_gpa)},${judge_by_gpa ? 97: 100}%,65%)`
+    if(cannot_judge(score)) return 'hsl(240,50%,90%)';
+    return `hsl(${120*prec(score,judge_by_gpa)},${judge_by_gpa ? 97: 100}%,70%)`
 }
 
 export function colorize_course(score,judge_by_gpa) {
-    if(cannot_judge(score) || score<60) return 'hsl(0,0%,70%)';
-    return `hsl(${120*prec(score,judge_by_gpa)},${judge_by_gpa ? 57 : 60}%,55%)`
+    if(cannot_judge(score) || score<60) return 'hsl(340,60%,65%)';
+    return `hsl(${120*prec(score,judge_by_gpa)},${judge_by_gpa ? 57 : 60}%,65%)`
 }
 
 export function colorize_backbar(score,judge_by_gpa) {
     let color,width;
     if(cannot_judge(score) || score<60) {
-        color='hsl(0,0%,70%)';
-        width=0;
+        color='hsl(240,50%,90%)';
+        width=is_fail(score)?0:1;
     } else {
         let p=prec(score,judge_by_gpa);
-        color=`hsl(${120*p},${judge_by_gpa ? 97: 100}%,65%)`;
+        color=`hsl(${120*p},${judge_by_gpa ? 97: 100}%,70%)`;
         width=Math.max(p,.01);
     }
     return [color,width];

@@ -2,6 +2,8 @@ import {get_isop_token,get_score} from './scores_api';
 import {check_score} from './score_parser';
 import {shown_score_helper} from './shown_score_helper';
 
+//import fake_score from './fake_score';
+
 export function do_init() {
     return (dispatch)=>{
         dispatch({
