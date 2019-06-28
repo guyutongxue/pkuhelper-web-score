@@ -36,8 +36,6 @@ class NewBlockViewer extends Component {
     render() {
         let props=this.props;
 
-        let tampered=score_tampered(props.course_list.map((idx)=>props.courses[idx]));
-
         let sorted_course_list=props.course_list.sort((id1,id2)=>{
             let s1=course_gpa_from_normalized_score(props.courses[id1].score);
             let s2=course_gpa_from_normalized_score(props.courses[id2].score);
@@ -48,7 +46,7 @@ class NewBlockViewer extends Component {
 
         return (
             <div className={'semester-block new-block'+(this.state.hidden ? ' new-block-hidden' : '')}>
-                <div className={tampered ? 'row-tampered' : ''}>
+                <div>
                     <RowLayout
                         left={null}
                         middle={

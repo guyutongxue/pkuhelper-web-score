@@ -19,7 +19,7 @@ class App extends Component {
         else if(this.props.loading_status==='initing')
             return (<OsuButton text="正在初始化……" button_text="…" disabled />);
         else if(this.props.loading_status==='init_error')
-            return (<OsuButton text={this.props.error} button_text="!" disabled />);
+            return (<OsuButton text={'初始化失败：'+this.props.error} button_text="重试" onClick={this.props.do_init} />);
         else if(this.props.loading_status==='ready')
             return (
                 <OsuButton text="点击按钮查询成绩" button_text="查询" onClick={this.props.do_load} />
@@ -27,7 +27,7 @@ class App extends Component {
         else if(this.props.loading_status==='loading')
             return (<OsuButton text="正在查询……" button_text="…" disabled />);
         else if(this.props.loading_status==='load_error')
-            return (<OsuButton text={'查询失败。'+this.props.error} button_text="重试" onClick={this.props.do_load} />);
+            return (<OsuButton text={'查询失败：'+this.props.error} button_text="重试" onClick={this.props.do_load} />);
         else if(this.props.loading_status==='done')
             return (<Viewer />);
         else
