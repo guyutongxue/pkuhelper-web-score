@@ -69,7 +69,10 @@ function Controller(props) {
             </a>
             &nbsp;/&nbsp;
             <a onClick={()=>props.do_switch('judge_by_gpa')}>
-                {props.display_switch.judge_by_gpa ? '百分制着色' : '四分制着色'}
+                {props.display_switch.judge_by_gpa ?
+                    <span title="当前四分制着色，GPA从1至4由红变绿">百分制着色</span> :
+                    <span title="当前百分制着色，分数从60至100由红变绿">四分制着色</span>
+                }
             </a>
         </p>
     );
