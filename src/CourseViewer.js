@@ -2,16 +2,18 @@ import React, {Component, PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {fix, describe, course_gpa_from_normalized_score, score_tampered} from './score_parser';
 import {RowLayout,VerticalLayout} from './Layout';
-import {colorize_course,colorize_backbar} from './colorize';
+import {colorize_course,colorize_coursebar} from './colorize';
 import {tamper_score, untamper_score} from './actions';
 
 import './CourseViewer.css';
 
-function RowBackbar(props) {
-    let [color,width]=colorize_backbar(props.score,props.judge_by_gpa);
-    return (
-        <div className="row-backbar" style={{backgroundColor: color, width: (100*width)+'%'}} />
-    )
+function make_score_gradient(score,judge_by_gpa) {
+    let [fgcolor,width]=colorize_coursebar(score,judge_by_gpa);
+    let bgcolor=colorize_course(score,judge_by_gpa);
+    let width_perc=(width*100)+'%';
+    return {
+        background: `linear-gradient(to right, ${fgcolor}, ${fgcolor} ${width_perc}, ${bgcolor} ${width_perc})`,
+    };
 }
 
 class ScoreTamperer extends Component {
@@ -59,10 +61,7 @@ function CourseViewer(props) {
     if(!tampered && gpa!==null && !isNaN(props.course.isop_gpa)) gpa=parseFloat(props.course.isop_gpa);
 
     return (
-        <div className={tampered ? 'row-tampered' : ''}>
-            <RowBackbar
-                score={props.course.score} judge_by_gpa={props.judge_by_gpa}
-            />
+        <div className={'course-row'+(tampered ? ' row-tampered' : '')}>
             <RowLayout
                 left={
                     <VerticalLayout up={fix(props.course.credit,1)} down="学分" />
@@ -88,9 +87,7 @@ function CourseViewer(props) {
                         need_hide_text={gpa!==null || props.course.score<60}
                     />
                 }
-                style={{
-                    backgroundColor: colorize_course(props.course.score,props.judge_by_gpa),
-                }}
+                style={make_score_gradient(props.course.score,props.judge_by_gpa)}
             />
         </div>
     );

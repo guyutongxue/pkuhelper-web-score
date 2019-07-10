@@ -75,7 +75,7 @@ function parse_teacher(line) {
     if(line==='' || parts.length===0) return '（无教师信息）';
 
     let teacher=parts[0];
-    let res=/^[^-]+-([^$]+)\$([^$]+)\$([^$]+)$/.exec(teacher);
+    let res=/^[^-]+-([^$]+)\$([^$]*)\$([^$]*)$/.exec(teacher);
 
     if(res)
         return `${res[1]}（${res[2]}）${parts.length>1 ? '等'+parts.length+'人' : ''}`;
@@ -88,7 +88,7 @@ export function parse_score(json) {
     let shown=shown_score_helper.get();
 
     let yjs=json.xslb==='yjs';
-    let courses=json.cjxx.map((row)=>{
+    let courses=(yjs ? json.scoreLists : json.cjxx).map((row)=>{
         let score=normalize_score_from_isop(yjs ? row.cj : row.xqcj);
         let details=yjs ? `${row.kclb}` : `${row.kclbmc} - ${parse_teacher(row.skjsxm)}`;
         return {

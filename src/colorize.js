@@ -24,7 +24,7 @@ export function colorize_course(score,judge_by_gpa) {
     return `hsl(${120*prec(score,judge_by_gpa)},${judge_by_gpa ? 57 : 60}%,65%)`
 }
 
-export function colorize_backbar(score,judge_by_gpa) {
+export function colorize_coursebar(score,judge_by_gpa) {
     let color,width;
     if(cannot_judge(score) || score<60) {
         color='hsl(240,50%,90%)';

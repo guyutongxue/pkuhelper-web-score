@@ -1,10 +1,6 @@
-.row-backbar {
-    width: 60%;
-    z-index: 1;
-    height: 2.65em;
-    margin-bottom: -2.65em;
+.course-row {
     position: relative;
-    transition: width .15s ease-out;
+    box-shadow: 0 -1px 0 rgba(0,0,0,.3);
 }
 
 .score-tamperer {
@@ -37,5 +33,6 @@
     color: white;
 }
 .row-tampered * {
-    text-decoration: line-through rgba(255,0,0,.5);
+    text-decoration-line: line-through;
+    text-decoration-color: rgba(255,0,0,.5);
 }
