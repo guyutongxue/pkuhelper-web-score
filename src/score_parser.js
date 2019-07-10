@@ -134,7 +134,7 @@ export function parse_score(json) {
 
     return {
         courses: courses,
-        isop_gpa: json.gpa.gpa,
+        isop_gpa: yjs ? null : json.gpa.gpa,
         semesters: semesters_li,
         new_block: new_block_list,
     };

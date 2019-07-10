@@ -21,7 +21,7 @@ function OverallViewer(props) {
                     middle={
                         <VerticalLayout
                             up="总绩点"
-                            down={`共 ${props.courses.length} 门课程，官方 GPA：${props.isop_gpa}`}
+                            down={`共 ${props.courses.length} 门课程，官方 GPA：${props.isop_gpa || '-.--'}`}
                             need_hide_text
                         />
                     }
