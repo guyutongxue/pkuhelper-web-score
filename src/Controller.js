@@ -61,7 +61,7 @@ class AutoRefreshController extends Component {
 
 function Controller(props) {
     return (
-        <p className="controller-bar">
+        <p className="controller-bar print-hide">
             <AutoRefreshController fire={props.do_refresh} />
             &nbsp;/&nbsp;
             <a onClick={()=>props.do_switch('hide_text')}>

@@ -5,6 +5,8 @@ import Viewer from './Viewer';
 import OsuButton from './OsuButton';
 import Controller from './Controller';
 
+import './App.css';
+
 class App extends Component {
     constructor(props) {
         super(props);

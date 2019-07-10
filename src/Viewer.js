@@ -11,7 +11,7 @@ import {do_load} from './actions';
 function Viewer(props) {
     return (
         <div>
-            <p className="refresh-time-line">
+            <p className="refresh-time-line print-hide">
                 <a onClick={props.do_refresh}>刷新</a> &nbsp;
                 <Time stamp={props.last_load_timestamp/1000} /> 更新
             </p>
