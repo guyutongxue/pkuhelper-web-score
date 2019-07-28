@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "browserslist": "^4.6.2",
+    "caniuse-lite": "^1.0.30000974",
     "md5": "^2.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

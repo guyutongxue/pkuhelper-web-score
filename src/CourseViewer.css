@@ -1,6 +1,6 @@
 .course-row {
     position: relative;
-    box-shadow: 0 -1px 0 rgba(0,0,0,.3);
+    box-shadow: 0 -1px 0 #7f7f7f;
 }
 
 .score-tamperer {

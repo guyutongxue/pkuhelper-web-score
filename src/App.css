@@ -14,13 +14,10 @@
     .semester-block>*:first-child {
         position: relative;
         box-shadow: unset;
-        border: 1px solid black;
+        border: 1px solid #7f7f7f;
     }
 
-    .layout-row {
-        page-break-inside: avoid;
-    }
     .course-row {
-        box-shadow: unset;
+        page-break-inside: avoid;
     }
 }
