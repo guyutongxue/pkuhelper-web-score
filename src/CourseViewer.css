@@ -8,7 +8,7 @@
     border: 0;
     font-family: unset;
     text-align: center;
-    width: 3em;
+    width: 2.5em;
     font-size: unset;
     text-decoration: unset;
     text-shadow: 0 0 3px white;
@@ -20,18 +20,53 @@
     cursor: pointer;
 }
 
-.tampered-badge {
+.course-badge {
     display: inline-block;
-    text-decoration: none !important;
-    color: red;
     cursor: pointer;
     padding: 0 .25em;
     border-radius: .25em;
 }
-.tampered-badge:hover {
-    background-color: red;
-    color: white;
+.course-badge, .course-badge * {
+    text-decoration: none !important;
 }
+.course-badge:hover {
+    background-color: #555;
+    color: white;
+    text-shadow: none;
+}
+.course-badge-danger {
+    color: red;
+}
+.course-badge-danger:hover {
+    background-color: red !important;
+}
+.course-badge-primary {
+    color: #00c;
+}
+.course-badge-primary:not(:hover) {
+    opacity: .7;
+}
+
+.course-badge:hover::before {
+    content: attr(data-tooltip);
+    font-size: .8rem;
+    position: relative;
+    display: inline-block;
+    width: 6em;
+    height: 1.2em;
+    line-height: 1.2em;
+    margin-bottom: -1em;
+    margin-right: -6em;
+    top: 1.25rem;
+    border-radius: 3px;
+    text-align: center;
+    left: -.25rem;
+    color: white;
+    background-color: rgba(0,0,0,.6);
+    pointer-events: none;
+    z-index: 100;
+}
+
 .row-tampered * {
     text-decoration-line: line-through;
     text-decoration-color: rgba(255,0,0,.5);

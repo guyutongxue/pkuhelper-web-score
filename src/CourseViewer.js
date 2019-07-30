@@ -8,11 +8,11 @@ import {tamper_score, untamper_score} from './actions';
 import './CourseViewer.css';
 
 function make_score_gradient(score,judge_by_gpa) {
-    let [fgcolor,width]=colorize_coursebar(score,judge_by_gpa);
+    let [fgcolorl,fgcolorr,width]=colorize_coursebar(score,judge_by_gpa);
     let bgcolor=colorize_course(score,judge_by_gpa);
     let width_perc=(width*100)+'%';
     return {
-        background: `linear-gradient(to right, ${fgcolor}, ${fgcolor} ${width_perc}, ${bgcolor} ${width_perc})`,
+        background: `linear-gradient(to right, ${fgcolorl}, ${fgcolorr} ${width_perc}, ${bgcolor} ${width_perc})`,
     };
 }
 
@@ -46,19 +46,26 @@ class ScoreTamperer extends Component {
     }
 }
 
-function TamperedBadge(props) {
-    return (
-        <span className="tampered-badge" onClick={props.onClick} title="Unranked">
-            ⚠
-        </span>
-    );
-}
-
 function CourseViewer(props) {
     let tampered=score_tampered([props.course]);
     let gpa=course_gpa_from_normalized_score(props.course.score);
 
     if(!tampered && gpa!==null && !isNaN(props.course.isop_gpa)) gpa=parseFloat(props.course.isop_gpa);
+
+    function do_course_survey() {
+        if(window._course_survey_asked || window.confirm(
+            `为《${props.course.name}》填写课程测评，让更多的人了解这门课程！\n\n`+
+            '* 课程测评并非由PKUHelper运营。你同意将这门课的成绩分享给该网站。你的身份信息和其他课的成绩仍将保密。'
+        )) {
+            window._course_survey_asked=true;
+            window.open(
+                'https://courses.pinzhixiaoyuan.com/reviews/post_external'+
+                `?course=${encodeURIComponent(props.course.course_id)}&course_name=${encodeURIComponent(props.course.name)}`+
+                `&term=${encodeURIComponent(props.course.sem_orig)}&teacher=${encodeURIComponent(props.course.first_teacher)}`+
+                `&score=${encodeURIComponent(props.course.score)}&platform=pkuhelper_web_score`
+            )
+        }
+    }
 
     return (
         <div className={'course-row'+(tampered ? ' row-tampered' : '')}>
@@ -70,7 +77,15 @@ function CourseViewer(props) {
                     <VerticalLayout
                         up={
                             <span>
-                                {!!tampered && <TamperedBadge onClick={props.untamper} />}
+                                {
+                                    tampered ?
+                                    <span className="course-badge course-badge-danger" onClick={props.untamper} data-tooltip="Unranked">
+                                        <span className="icon icon-warning" />
+                                    </span> :
+                                    <span className="course-badge course-badge-primary" onClick={do_course_survey} data-tooltip="测评该课程">
+                                        <span className="icon icon-share" />
+                                    </span>
+                                }
                                 {props.course.name}
                             </span>
                         }

@@ -53,9 +53,9 @@ class AutoRefreshController extends Component {
 
     render() {
         if(this.state.time_left===null)
-            return (<a onClick={this.toggle_bound}>自动刷新</a>);
+            return (<a onClick={this.toggle_bound}><span className="icon icon-refresh" /> 自动刷新</a>);
         else
-            return (<a onClick={this.toggle_bound}>{this.state.time_left}s后刷新</a>);
+            return (<a onClick={this.toggle_bound}><span className="icon icon-refresh" /> {this.state.time_left}s后刷新</a>);
     }
 }
 
@@ -63,15 +63,18 @@ function Controller(props) {
     return (
         <p className="controller-bar print-hide">
             <AutoRefreshController fire={props.do_refresh} />
-            &nbsp;/&nbsp;
+            &nbsp; &nbsp;
             <a onClick={()=>props.do_switch('hide_text')}>
-                {props.display_switch.hide_text ? '显示文字' : '隐藏文字'}
+                {props.display_switch.hide_text ?
+                    <span><span className="icon icon-show" /> 显示文字</span> :
+                    <span><span className="icon icon-hide" /> 隐藏文字</span>
+                }
             </a>
-            &nbsp;/&nbsp;
+            &nbsp; &nbsp;
             <a onClick={()=>props.do_switch('judge_by_gpa')}>
                 {props.display_switch.judge_by_gpa ?
-                    <span title="当前四分制着色，GPA从1至4由红变绿">百分制着色</span> :
-                    <span title="当前百分制着色，分数从60至100由红变绿">四分制着色</span>
+                    <span title="当前四分制着色，GPA从1至4由红变绿"><span className="icon icon-display"/> 百分制着色</span> :
+                    <span title="当前百分制着色，分数从60至100由红变绿"><span className="icon icon-display"/> 四分制着色</span>
                 }
             </a>
         </p>

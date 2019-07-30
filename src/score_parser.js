@@ -82,6 +82,18 @@ function parse_teacher(line) {
     else
         return `${teacher}${parts.length>1 ? ' 等'+parts.length+'人' : ''}`;
 }
+function first_teacher_name(line) {
+    let parts=line.split(',');
+    if(line==='' || parts.length===0) return '';
+
+    let teacher=parts[0];
+    let res=/^[^-]+-([^$]+)\$[^$]*\$[^$]*$/.exec(teacher);
+
+    if(res)
+        return res[1];
+    else
+        return '';
+}
 
 export function parse_score(json) {
     console.log(json);
@@ -96,12 +108,14 @@ export function parse_score(json) {
             year: parseInt(row.xnd),
             semester: parseInt(row.xq),
             sem_name: `${row.xnd}-${row.xq}`,
+            sem_orig: row.xndxqpx,
             name: row.kcmc,
             credit: parseFloat(row.xf),
             score: score,
             true_score: score,
             isop_gpa: row.jd!==undefined ? row.jd : course_gpa_from_normalized_score(score),
             details: details,
+            first_teacher: first_teacher_name(row.skjsxm),
         }
     });
 
