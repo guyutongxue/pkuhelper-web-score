@@ -25,8 +25,12 @@ export function get_score(isop_token) {
         fetch(PKUHELPER_ROOT+`isop_proxy/scores?${arg}&msg=${md5(arg+ISOP_APPCODE)}`)
             .then(get_json)
             .then((json)=>{
-                if(!json.success)
-                    throw new Error(JSON.stringify(json));
+                if(!json.success) {
+                    if(json.errCode && ['E01','E02','E03'].indexOf(json.errCode)!==-1)
+                        throw new Error('授权失败，请尝试去树洞注销再重新登录账号。'+JSON.stringify(json));
+                    else
+                        throw new Error(JSON.stringify(json));
+                }
                 resolve(json);
             })
             .catch(reject);
