@@ -1,4 +1,4 @@
-import {get_isop_token,get_score} from './scores_api';
+import {get_score} from './scores_api';
 import {check_score} from './score_parser';
 import {shown_score_helper} from './shown_score_helper';
 
@@ -6,33 +6,27 @@ import {shown_score_helper} from './shown_score_helper';
 
 export function do_init() {
     return (dispatch)=>{
-        dispatch({
-            type: 'init_begin'
-        });
-        get_isop_token()
-            .then((token)=>{
-                dispatch({
-                    type: 'init_ok',
-                    isop_token: token,
-                });
-            })
-            .catch((err)=>{
-                dispatch({
-                    type: 'init_error',
-                    error: ''+err,
-                });
+        if(localStorage['TOKEN'])
+            dispatch({
+                type: 'init_ok',
+                user_token: localStorage['TOKEN'],
+            });
+        else
+            dispatch({
+                type: 'init_error',
+                error: '请前往树洞登录账号',
             });
     };
 }
 
 export function do_load(is_auto=false) {
     return (dispatch,getState)=>{
-        let {isop_token}=getState();
-        if(isop_token) {
+        let {user_token}=getState();
+        if(user_token) {
             dispatch({
                 type: 'load_begin',
             });
-            get_score(isop_token)
+            get_score(user_token)
                 .then((res)=>{
                     dispatch({
                         type: 'load_done',
@@ -50,7 +44,7 @@ export function do_load(is_auto=false) {
         } else {
             dispatch({
                 type: 'load_error',
-                error: 'no isop token',
+                error: 'no user_token',
             })
         }
     };

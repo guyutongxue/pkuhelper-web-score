@@ -2,7 +2,7 @@ import {parse_score} from './score_parser';
 
 const INIT_STATE={
     loading_status: 'not_init',
-    isop_token: null,
+    user_token: null,
     data: null,
     display_switch: {
         hide_text: false,
@@ -14,18 +14,12 @@ const INIT_STATE={
 
 export function reduce(state=INIT_STATE,action) {
     switch(action.type) {
-        case 'init_begin':
-            return {
-                ...state,
-                loading_status: 'initing',
-                error: null,
-            };
         case 'init_ok':
             return {
                 ...state,
                 loading_status: 'ready',
                 error: null,
-                isop_token: action.isop_token,
+                user_token: action.user_token,
             };
         case 'init_error':
             return {
