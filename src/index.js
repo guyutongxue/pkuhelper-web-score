@@ -9,7 +9,11 @@ import App from './App';
 import Title from './Title';
 import Footer from './Footer';
 
+import {elevate} from './infrastructure/elevator';
+
 import './index.css';
+
+elevate();
 
 // polyfill
 if(!window.Object.values)

@@ -18,12 +18,25 @@ class AutoRefreshController extends Component {
 
     toggle() {
         this.setState((prevState)=>{
-            if(prevState.time_left===null) {
+            if(prevState.time_left===null) { // enable
+                if(window.Notification)
+                    Notification.requestPermission()
+                        .then((perm)=>{
+                            console.log('notification permission:',perm);
+                            if(perm==='granted')
+                                new Notification(
+                                    '已启用出分提醒',
+                                    {
+                                        body: '出成绩时会像这样提醒您',
+                                        tag: 'score',
+                                    }
+                                );
+                        });
                 this.interval=setInterval(this.tick.bind(this),1000);
                 return {
                     time_left: REFRESH_TIME,
                 };
-            } else {
+            } else { // disable
                 if(this.interval) {
                     clearInterval(this.interval);
                     this.interval=null;

@@ -19,7 +19,14 @@ class NewBlockViewer extends Component {
     componentDidMount() {
         if(this.props.is_auto)
             setTimeout(()=>{
-                alert(`新增 ${this.props.course_list.length} 门成绩！`);
+                if(window.Notification && Notification.permission==='granted')
+                    new Notification(
+                        `新增 ${this.props.course_list.length} 门成绩`,
+                        {
+                            body: `${this.props.course_list.map((co)=>this.props.courses[co].name).join('、')}`,
+                            tag: 'score',
+                        }
+                    );
             },300);
     }
 
