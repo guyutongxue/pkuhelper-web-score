@@ -71,8 +71,8 @@ function should_calc_credit(score) {
 
 function parse_teacher(line) {
     //"0006183063-熊校良$信息学院$助理研究员,0006172171-宋今$信息学院$馆员,0006181061-卢亮$新闻学院$副教授,0006182105-李子奇$信息学院$助理研究员,1006184103-王一涵$团委$讲师"
+    if(!line) return '（无教师信息）';
     let parts=line.split(',');
-    if(line==='' || parts.length===0) return '（无教师信息）';
 
     let teacher=parts[0];
     let res=/^[^-]+-([^$]+)\$([^$]*)\$([^$]*)$/.exec(teacher);
@@ -83,8 +83,8 @@ function parse_teacher(line) {
         return `${teacher}${parts.length>1 ? ' 等'+parts.length+'人' : ''}`;
 }
 function first_teacher_name(line) {
+    if(!line) return '';
     let parts=line.split(',');
-    if(line==='' || parts.length===0) return '';
 
     let teacher=parts[0];
     let res=/^[^-]+-([^$]+)\$[^$]*\$[^$]*$/.exec(teacher);
