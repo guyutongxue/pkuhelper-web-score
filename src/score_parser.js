@@ -33,6 +33,8 @@ const DESCRIPTION={
 function normalize_score_from_isop(score) {
     if(score==='合格') return 'P';
     else if(score==='不合格') return 'NP';
+    else if(score==='缓考') return 'I';
+    else if(score==='免修') return 'EX';
     else if(!isNaN(score)) return parseFloat(score);
     else return score;
 }
