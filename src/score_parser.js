@@ -128,7 +128,7 @@ export function parse_score(json) {
         let sem=course.sem_name;
         if(!semesters[sem])
             semesters[sem]={
-                name: `${course.year}学年 第${course.semester}学期`,
+                name: `${isNaN(course.year) ? '--' : course.year}学年 第${isNaN(course.semester) ? '--' : course.semester}学期`,
                 year: course.year,
                 semester: course.semester,
                 course_list: [],

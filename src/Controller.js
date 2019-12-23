@@ -27,7 +27,7 @@ class AutoRefreshController extends Component {
                                 new Notification(
                                     '已启用出分提醒',
                                     {
-                                        body: '出成绩时会像这样提醒您',
+                                        body: '只要一直开着自动刷新，出成绩时会像这样提醒您',
                                         tag: 'score',
                                     }
                                 );
