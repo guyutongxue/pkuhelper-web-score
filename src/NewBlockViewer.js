@@ -51,13 +51,18 @@ class NewBlockViewer extends Component {
             return s2!==s1 ? s2-s1 : f1!==f2 ? f2-f1 : id2-id1;
         });
 
+        let is_all_normal_distr=props.course_list.every((id)=> {
+            let sc=props.courses[id].score;
+            return !isNaN(sc) && sc>83.9995 && sc<84.9995;
+        });
+
         return (
             <div className={'semester-block new-block'+(this.state.hidden ? ' new-block-hidden' : '')}>
                 <div>
                     <RowLayout
                         left={null}
                         middle={
-                            <VerticalLayout up="新增成绩" down={`共 ${props.course_list.length} 门课程`} />
+                            <VerticalLayout up={`新增${is_all_normal_distr ? '正态' : '成绩'}`} down={`共 ${props.course_list.length} 门课程`} />
                         }
                         right={
                             <button onClick={this.read_all.bind(this)} disabled={this.state.hidden} className="read-all-button">已阅</button>
