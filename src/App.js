@@ -6,6 +6,7 @@ import OsuButton from './OsuButton';
 import Controller from './Controller';
 
 import './App.css';
+import egg_84_img from './egg_84.jpg';
 
 class App extends Component {
     constructor(props) {
@@ -34,6 +35,7 @@ class App extends Component {
     render() {
         return (
             <div>
+                <link rel="prefetch" href={egg_84_img} />
                 <Controller />
                 {this.render_viewer()}
             </div>
