@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {course_gpa_from_normalized_score, score_tampered, is_fail} from './score_parser';
 import CourseViewer from './CourseViewer';
 import {RowLayout, VerticalLayout} from './Layout';
+import {Egg84} from './egg_84';
 import {colorize_new_block} from './colorize';
 import {read_all} from './actions';
 
@@ -59,6 +60,7 @@ class NewBlockViewer extends Component {
         return (
             <div className={'semester-block new-block'+(this.state.hidden ? ' new-block-hidden' : '')}>
                 <div>
+                    {is_all_normal_distr && <Egg84 />}
                     <RowLayout
                         left={null}
                         middle={
