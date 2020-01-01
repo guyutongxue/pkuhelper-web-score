@@ -2,7 +2,7 @@
     width: 100%;
     height: 167px;
     z-index: 120;
-    background: url("/static/egg_84.jpg") center center / contain no-repeat;
+    background: url("./egg_84.jpg") center center / contain no-repeat;
     position: absolute;
     margin-top: -75px;
     pointer-events: none;
