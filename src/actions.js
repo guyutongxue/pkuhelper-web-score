@@ -26,7 +26,7 @@ export function do_load(is_auto=false) {
             dispatch({
                 type: 'load_begin',
             });
-            get_score(user_token)
+            get_score(user_token,is_auto)
                 .then((res)=>{
                     dispatch({
                         type: 'load_done',

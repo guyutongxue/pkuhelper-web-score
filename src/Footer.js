@@ -9,9 +9,16 @@ class GpaToolbox extends Component {
         };
     }
 
-    set_x() {
-        let x=parseFloat(prompt('x: （60≤x≤100）'));
-        if(!x || x>100 || x<60) x=null;
+    set_xy() {
+        let x=parseFloat(prompt('输入分数(60~100)或绩点(1~4)来换算'));
+        if(x && x>=60 && x<=100) { // score
+            ;
+        } else if(x && x>=1 && x<=4) { // gpa
+            x=100-Math.sqrt(1600/3*(4-x));
+        } else { // invalid or '' or null
+            x=null;
+        }
+
         this.setState({
             x: x,
         });
@@ -20,12 +27,12 @@ class GpaToolbox extends Component {
     render() {
         if(this.state.x===null)
             return (
-                <p>绩点公式 <a onClick={this.set_x.bind(this)}><b>GPA(x)</b></a> = 4-3*(100-x)<sup>2</sup>/1600</p>
+                <p>绩点公式 <a onClick={this.set_xy.bind(this)}>GPA(x) = 4-3*(100-x)<sup>2</sup>/1600</a></p>
             );
         else {
             let y=4-3*Math.pow(100-this.state.x,2)/1600;
             return (
-                <p>绩点公式 <a onClick={this.set_x.bind(this)}><b>GPA({this.state.x.toFixed(1)})</b></a> = {y.toFixed(3)}</p>
+                <p>绩点公式 <a onClick={this.set_xy.bind(this)}>GPA({this.state.x.toFixed(1)}) = {y.toFixed(3)}</a></p>
             );
         }
     }
