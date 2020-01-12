@@ -52,6 +52,11 @@ export function reduce(state=INIT_STATE,action) {
                 error: null,
                 last_load_timestamp: action.timestamp,
             };
+        case 'login_required':
+            return {
+                ...state,
+                loading_status: 'login_required',
+            };
 
         case 'toggle_switch':
             return {

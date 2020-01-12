@@ -1,4 +1,4 @@
-import {get_score} from './scores_api';
+import {get_score, LoginRequiredError} from './scores_api';
 import {check_score} from './score_parser';
 import {shown_score_helper} from './shown_score_helper';
 
@@ -13,8 +13,7 @@ export function do_init() {
             });
         else
             dispatch({
-                type: 'init_error',
-                error: '请前往树洞登录账号',
+                type: 'login_required',
             });
     };
 }
@@ -36,15 +35,19 @@ export function do_load(is_auto=false) {
                     })
                 })
                 .catch((err)=>{
-                    dispatch({
-                        type: 'load_error',
-                        error: ''+err,
-                    });
+                    if(err===LoginRequiredError)
+                        dispatch({
+                            type: 'login_required',
+                        });
+                    else
+                        dispatch({
+                            type: 'load_error',
+                            error: ''+err,
+                        });
                 });
         } else {
             dispatch({
-                type: 'load_error',
-                error: 'no user_token',
+                type: 'login_required',
             })
         }
     };
