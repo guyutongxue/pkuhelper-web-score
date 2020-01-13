@@ -68,7 +68,7 @@ export function tamper_score(idx,score) {
     return {
         type: 'tamper_score',
         idx: idx,
-        score: score,
+        score: isNaN(score) ? score : parseFloat(score),
     }
 }
 
