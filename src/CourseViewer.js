@@ -7,7 +7,7 @@ import {tamper_score, untamper_score} from './actions';
 
 import './CourseViewer.css';
 
-function make_score_gradient(score,judge_by_gpa) {
+export function make_score_gradient(score,judge_by_gpa) {
     let [fgcolorl,fgcolorr,width]=colorize_coursebar(score,judge_by_gpa);
     let bgcolor=colorize_course(score,judge_by_gpa);
     let width_perc=(width*100)+'%';
@@ -79,10 +79,10 @@ function CourseViewer(props) {
                             <span>
                                 {
                                     tampered ?
-                                    <span className="course-badge course-badge-danger" onClick={props.untamper} data-tooltip="Unranked">
+                                    <span className="prevent-click-handler course-badge course-badge-danger" onClick={props.untamper} data-tooltip="Unranked">
                                         <span className="icon icon-warning" />
                                     </span> :
-                                    <span className="course-badge course-badge-primary" onClick={do_course_survey} data-tooltip="测评该课程">
+                                    <span className="prevent-click-handler course-badge course-badge-primary" onClick={do_course_survey} data-tooltip="测评该课程">
                                         <span className="icon icon-share" />
                                     </span>
                                 }
@@ -90,6 +90,15 @@ function CourseViewer(props) {
                             </span>
                         }
                         down={props.course.details}
+                        extra={
+                            <div>
+                                {props.course.extras.map(([name,value])=>(
+                                    <p>
+                                        <b>{name}：</b>{value}
+                                    </p>
+                                ))}
+                            </div>
+                        }
                         need_hide_text
                     />
                 }

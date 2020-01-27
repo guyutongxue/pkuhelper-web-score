@@ -97,6 +97,29 @@ function first_teacher_name(line) {
         return '';
 }
 
+function extra_infos(row) {
+    let interesting_keys=new Map(); // so it is ordered
+    // both yjs and bks
+    interesting_keys.set('kch','课程号');
+    // yjs
+    interesting_keys.set('cjjlfs', '成绩记录方式');
+    interesting_keys.set('hgbz', '合格标志');
+    // bks
+    interesting_keys.set('ywmc', '课程英文名');
+    interesting_keys.set('jxbh', '教学班号');
+    interesting_keys.set('kctx', '课程体系');
+    interesting_keys.set('zxjhbh', '执行计划编号');
+    interesting_keys.set('skjsxm', '教师信息');
+    interesting_keys.set('bkcjbh', '成绩编号');
+    interesting_keys.set('xslb', '学生类别');
+    let ret=[];
+    interesting_keys.forEach((v,k)=>{
+        if(row[k])
+            ret.push([v,row[k]]);
+    });
+    return ret;
+}
+
 export function parse_score(json) {
     console.log(json);
     let shown=shown_score_helper.get();
@@ -104,20 +127,28 @@ export function parse_score(json) {
     let yjs=json.xslb==='yjs';
     let courses=(yjs ? json.scoreLists : json.cjxx).map((row)=>{
         let score=normalize_score_from_isop(yjs ? row.cj : row.xqcj);
-        let details=yjs ? `${row.kclb}` : `${row.kclbmc} - ${parse_teacher(row.skjsxm)}`;
+        let type=yjs ? row.kclb : row.kclbmc;
+        let teacher_str=parse_teacher(row.skjsxm);
+        let details=type+(teacher_str ? ` - ${teacher_str}` : '');
         return {
             course_id: row.kch,
+            name: row.kcmc,
+            type: type,
+
             year: parseInt(row.xnd),
             semester: parseInt(row.xq),
             sem_name: `${row.xnd}-${row.xq}`,
             sem_orig: row.xndxqpx,
-            name: row.kcmc,
+
             credit: parseFloat(row.xf),
             score: score,
             true_score: score,
             isop_gpa: row.jd!==undefined ? row.jd : course_gpa_from_normalized_score(score),
-            details: details,
-            first_teacher: first_teacher_name(row.skjsxm),
+
+            details: details, // shown in the second line
+            extras: extra_infos(row), // shown in the extra line
+
+            first_teacher: first_teacher_name(row.skjsxm), // used in courses survey
         }
     });
 
