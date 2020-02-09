@@ -82,8 +82,8 @@ class _VerticalLayout extends PureComponent {
         }
     }
 
-    on_click() {
-        if(this.props.extra)
+    on_click(e) {
+        if(this.props.extra && !e.target.closest('a'))
             this.setState((prevState)=>({
                 show_extra: !prevState.show_extra,
             }));

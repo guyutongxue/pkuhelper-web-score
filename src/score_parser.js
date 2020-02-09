@@ -1,3 +1,4 @@
+import React from 'react';
 import {shown_score_helper} from './shown_score_helper';
 
 const STATIC_GPA={
@@ -100,22 +101,31 @@ function first_teacher_name(line) {
 function extra_infos(row) {
     let interesting_keys=new Map(); // so it is ordered
     // both yjs and bks
-    interesting_keys.set('kch','课程号');
+    interesting_keys.set('kch',['课程号']);
     // yjs
-    interesting_keys.set('cjjlfs', '成绩记录方式');
-    interesting_keys.set('hgbz', '合格标志');
+    interesting_keys.set('cjjlfs', ['成绩记录方式']);
+    interesting_keys.set('hgbz', ['合格标志']);
     // bks
-    interesting_keys.set('ywmc', '课程英文名');
-    interesting_keys.set('jxbh', '教学班号');
-    interesting_keys.set('kctx', '课程体系');
-    interesting_keys.set('zxjhbh', '执行计划编号');
-    interesting_keys.set('skjsxm', '教师信息');
-    interesting_keys.set('bkcjbh', '成绩编号');
-    interesting_keys.set('xslb', '学生类别');
+    interesting_keys.set('zxjhbh', ['执行计划编号',(v)=>(
+        <a href={'https://elective.pku.edu.cn/elective2008/edu/pku/stu/elective/controller/courseDetail/getCourseDetail.do?kclx=BK&course_seq_no='+encodeURIComponent(v)}
+            target="_blank" rel="noopener noreferrer">
+            {v}
+        </a>
+    )]);
+    interesting_keys.set('ywmc', ['课程英文名']);
+    interesting_keys.set('kctx', ['课程体系']);
+    interesting_keys.set('jxbh', ['教学班号']);
+    interesting_keys.set('skjsxm', ['教师信息']);
+    interesting_keys.set('bkcjbh', ['成绩编号']);
+    interesting_keys.set('xslb', ['学生类别']);
     let ret=[];
     interesting_keys.forEach((v,k)=>{
-        if(row[k])
-            ret.push([v,row[k]]);
+        if(row[k]) {
+            if(v.length===2)
+                ret.push([v[0],v[1](row[k])]);
+            else //v.length===1
+                ret.push([v[0],row[k]]);
+        }
     });
     return ret;
 }

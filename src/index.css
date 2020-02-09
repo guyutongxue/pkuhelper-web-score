@@ -7,3 +7,7 @@ body {
     max-width: 800px;
     margin: auto;
 }
+
+a {
+    color: #00c;
+}
