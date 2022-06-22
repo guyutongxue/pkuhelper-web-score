@@ -1,0 +1,13 @@
+<div class="container">
+  <app-controller></app-controller>
+  <app-osu-button
+    *ngIf="true; else viewer"
+    buttonText="查询"
+    text="点击按钮查询成绩"
+  >
+  </app-osu-button>
+  <ng-template #viewer>
+    <app-viewer></app-viewer>
+  </ng-template>
+  <app-footer></app-footer>
+</div>

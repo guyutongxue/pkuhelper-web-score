@@ -1,0 +1,37 @@
+body {
+  background-color: #333333;
+  color: white;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+a {
+  color: #00c;
+}
+
+@media print {
+  body {
+    background-color: white !important;
+  }
+
+  .print-hide {
+    display: none;
+  }
+
+  .footer * {
+    color: black !important;
+  }
+
+  .semester-block > *:first-child {
+    position: relative;
+    box-shadow: unset;
+    border: 1px solid #7f7f7f;
+  }
+
+  .course-row {
+    page-break-inside: avoid;
+  }
+}

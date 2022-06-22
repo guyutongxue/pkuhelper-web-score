@@ -4,4 +4,6 @@
 
 根据 [Web Archive](https://web.archive.org/web/20201031234921/https://github.com/pkuhelper-web/score)，目前已知该项目的最新提交是 `e4dfc28`（2022 年 8 月），但提交内容已不可考。现存的最新提交记录为 `1b97c91`，由 [@cedric341561](https://github.com/cedric341561) 的[分支](https://github.com/cedric341561/score)可得。
 
-出于保护性的目的，我计划重建本项目源码；但由于我不熟悉 React，我可能会改用 Vue/Angular 重写。获取成绩的 API 暂时仍使用 `pkuhelper.pku.edu.cn/api_xmcp`。但由于该 API 并不可靠，我有可能会添加直接从 Portal 获取成绩的方法。
+> 我曾询问 [@xmcp](https://github.com/xmcp) 是否可提供代码，对方已读不回。（？？？）
+
+出于保护性的目的，我计划重建本项目源码；但由于我不熟悉 React，我将改用 Angular 重写。获取成绩的 API 暂时仍使用 `pkuhelper.pku.edu.cn/api_xmcp`。但由于该 API 并不可靠，我有可能会添加直接从 Portal 获取成绩的方法。
