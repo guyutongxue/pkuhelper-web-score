@@ -1,1 +1,27 @@
-<p>controller works!</p>
+<p class="controller-bar print-hide">
+  <span>
+    <a (click)="(undefined)">
+      <span class="icon icon-refresh"></span>
+      自动刷新
+    </a>
+    <!-- {"time_left"}}s后刷新 -->
+  </span>
+  &nbsp; &nbsp;
+  <a (click)="(undefined)">
+    <span class="icon" [ngClass]="true ? 'icon-show' : 'icon-hide'"></span>
+    {{ true ? "显示文字" : "隐藏文字" }}
+  </a>
+  &nbsp; &nbsp;
+  <a (click)="(undefined)">
+    <span
+      [title]="
+        true
+          ? '当前百分制着色，分数从60至100由红变绿'
+          : '当前四分制着色，GPA从1至4由红变绿'
+      "
+    >
+      <span className="icon icon-display"></span>
+      {{ true ? "百分制着色" : "四分制着色" }}
+    </span>
+  </a>
+</p>
