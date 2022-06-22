@@ -1,0 +1,54 @@
+import {
+  courseGpaFromNormalizedScore,
+  guessScoreFromGpa,
+  isFail,
+} from './score_parser';
+
+// TODO 类型检查
+function prec(score: string | number, judgeByGpa: boolean) {
+  if (judgeByGpa) {
+    const gpa = courseGpaFromNormalizedScore(score);
+    // @ts-expect-error 如果 gpa 没有怎么办？
+    return (gpa - 1) / 3;
+  } else {
+    score = guessScoreFromGpa(courseGpaFromNormalizedScore(score)); // like A+
+    // @ts-expect-error 如果 score 是 --.- 怎么办？
+    return (score - 60) / 40;
+  }
+}
+
+function cannotJudge(score: string | number) {
+  return courseGpaFromNormalizedScore(score) === null;
+}
+
+export function colorizeSemester(score: string | number, judgeByGpa: boolean): string {
+  if (cannotJudge(score)) return 'hsl(240,50%,90%)';
+  return `hsl(${120 * prec(score, judgeByGpa)},${
+    judgeByGpa ? 97 : 100
+  }%,70%)`;
+}
+
+export function colorizeCourse(score: string | number, judgeByGpa: boolean): string {
+  if (cannotJudge(score) || score < 60) return 'hsl(340,60%,65%)';
+  return `hsl(${120 * prec(score, judgeByGpa)},${
+    judgeByGpa ? 57 : 60
+  }%,65%)`;
+}
+
+export function colorizeCourseBar(score: string | number, judgeByGpa: boolean, left = false): [string, string, number] {
+  let colorL, colorR, width;
+  if (cannotJudge(score) || score < 60) {
+    colorL = colorR = 'hsl(240,50%,90%)';
+    width = isFail(score) ? 0 : 1;
+  } else {
+    let p = prec(score, judgeByGpa);
+    colorL = `hsl(${120 * p},${judgeByGpa ? 97 : 100}%,75%)`;
+    colorR = `hsl(${120 * p},${judgeByGpa ? 97 : 100}%,70%)`;
+    width = Math.max(p, 0.01);
+  }
+  return [colorL, colorR, width];
+}
+
+export function colorizeNewBlock() {
+  return 'hsl(0,0%,90%)';
+}

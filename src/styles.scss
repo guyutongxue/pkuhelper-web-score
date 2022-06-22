@@ -3,13 +3,14 @@ body {
   color: white;
 }
 
-.container {
-  max-width: 800px;
-  margin: auto;
+body, pre, textarea {
+  font-family: "Segoe UI", 微软雅黑, "Microsoft YaHei", sans-serif;
 }
 
 a {
   color: #00c;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 @media print {

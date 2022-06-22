@@ -4,7 +4,7 @@ import {course_gpa_from_normalized_score, score_tampered, is_fail} from './score
 import CourseViewer from './CourseViewer';
 import {RowLayout, VerticalLayout} from './Layout';
 import {Egg84} from './egg_84';
-import {colorize_new_block} from './colorize';
+import {colorizeNewBlock} from '../app/colorize';
 import {read_all} from './actions';
 
 import './NewBlockViewer.css';
@@ -70,7 +70,7 @@ class NewBlockViewer extends Component {
                             <button onClick={this.read_all.bind(this)} disabled={this.state.hidden} className="read-all-button">已阅</button>
                         }
                         style={{
-                            backgroundColor: colorize_new_block(),
+                            backgroundColor: colorizeNewBlock(),
                         }}
                     />
                 </div>

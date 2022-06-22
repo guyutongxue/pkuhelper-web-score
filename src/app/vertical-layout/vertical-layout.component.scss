@@ -1,0 +1,17 @@
+.layout-vertical {
+  transition: opacity .15s ease-out;
+}
+.layout-vertical-down, .layout-vertical-extra {
+  font-size: 60%;
+}
+.layout-vertical-extra {
+  transition: max-height .15s ease-out;
+}
+.layout-vertical-extra-hide {
+  max-height: 0;
+  overflow-y: hidden;
+}
+.layout-vertical-extra-show {
+  max-height: 7em;
+  overflow-y: auto;
+}

@@ -1,0 +1,32 @@
+<div [ngClass]="'course-row' + (tampered ? ' row-tampered' : '')">
+  <app-row-layout [background]="makeScoreGradient(course.score, false)">
+    <app-vertical-layout left [up]="fix(course.credit, 1)" down="学分">
+    </app-vertical-layout>
+
+    <!-- {
+                 tampered ?
+                 <span className="prevent-click-handler course-badge course-badge-danger" onClick={props.untamper} data-tooltip="Unranked">
+                     <span className="icon icon-warning" />
+                 </span> :
+                 <span className="prevent-click-handler course-badge course-badge-primary" onClick={do_course_survey} data-tooltip="测评该课程">
+                     <span className="icon icon-share" />
+                 </span>
+             } -->
+    <app-vertical-layout
+      middle
+      [up]="course.name"
+      [down]="course.details"
+      [extra]="extras"
+      [hideText]="true"
+    ></app-vertical-layout>
+    >
+    <!-- <ScoreTamperer score={fix(props.course.score,1)} onChange={props.tamper_score} /> -->
+    <app-vertical-layout
+      right
+      [up]="fix(course.score, 1)"
+      [down]="gpa !== null ? gpa.toFixed(2) : describe(course.score)"
+      [hideText]="gpa !== null || course.score < 60"
+    >
+    </app-vertical-layout>
+  </app-row-layout>
+</div>

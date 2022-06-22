@@ -1,9 +1,10 @@
 <div class="container">
   <app-controller></app-controller>
   <app-osu-button
-    *ngIf="true; else viewer"
+    *ngIf="!(hasData | async); else viewer"
     buttonText="查询"
     text="点击按钮查询成绩"
+    (click)="load()"
   >
   </app-osu-button>
   <ng-template #viewer>

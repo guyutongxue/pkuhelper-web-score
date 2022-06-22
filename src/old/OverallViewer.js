@@ -2,7 +2,7 @@ import React, {Component, PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {calc_avg_gpa, sum_credit, guess_score_from_gpa, fix, score_tampered} from './score_parser';
 import {RowLayout, VerticalLayout} from './Layout';
-import {colorize_semester} from './colorize';
+import {colorizeSemester} from '../app/colorize';
 import {make_score_gradient} from './CourseViewer';
 
 function OverallViewer(props) {
@@ -82,7 +82,7 @@ function OverallViewer(props) {
                         <VerticalLayout up={sem_gpa!==null ? sem_gpa.toFixed(2) : '-.--'} down={fix(sem_score,1)} need_hide_text />
                     }
                     style={{
-                        backgroundColor: colorize_semester(sem_score,props.judge_by_gpa),
+                        backgroundColor: colorizeSemester(sem_score,props.judge_by_gpa),
                     }}
                 />
             </div>

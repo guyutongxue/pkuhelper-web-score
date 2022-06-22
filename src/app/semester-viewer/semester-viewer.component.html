@@ -1,0 +1,25 @@
+<div class="semester-block">
+  <div [ngClass]="tampered ? 'row-tampered' : ''">
+    <app-row-layout [background]="colorizeSemester(score, judgeByGpa)">
+      <app-vertical-layout left [up]="fix(credit, 1)" down="学分">
+      </app-vertical-layout>
+      <app-vertical-layout
+        middle
+        [up]="sem.name"
+        [down]="'共 ' + courseList.length.toString() + ' 门课程'"
+      >
+      </app-vertical-layout>
+      <app-vertical-layout
+        right
+        [up]="gpa !== null ? gpa.toFixed(2) : '-.--'"
+        [down]="fix(score, 1)"
+        need_hide_text
+      >
+      </app-vertical-layout>
+    </app-row-layout>
+  </div>
+  <app-course-viewer
+    *ngFor="let course of courseList"
+    [index]="course"
+  ></app-course-viewer>
+</div>

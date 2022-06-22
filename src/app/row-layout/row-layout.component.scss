@@ -1,0 +1,22 @@
+.layout-row {
+  display: flex;
+  padding-top: .25em;
+  padding-bottom: .25em;
+  color: black;
+  text-shadow: 0 0 3px white;
+}
+.layout-row>* {
+  z-index: 5;
+}
+
+.layout-row-left {
+  flex: 0 0 2.5em;
+  text-align: center;
+}
+.layout-row-middle {
+  flex: 1 1;
+}
+.layout-row-right {
+  flex: 0 0 2.5em;
+  text-align: center;
+}
