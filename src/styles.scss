@@ -1,9 +1,15 @@
 body {
   background-color: #333333;
   color: white;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  text-size-adjust: 100%;
 }
 
-body, pre, textarea {
+body,
+pre,
+textarea {
   font-family: "Segoe UI", 微软雅黑, "Microsoft YaHei", sans-serif;
 }
 
@@ -11,6 +17,11 @@ a {
   color: #00c;
   text-decoration: none;
   cursor: pointer;
+}
+
+.row-tampered * {
+  text-decoration-line: line-through;
+  text-decoration-color: rgba(255, 0, 0, 0.5);
 }
 
 p {

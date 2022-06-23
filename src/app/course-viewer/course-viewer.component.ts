@@ -18,9 +18,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Subject, Subscription, switchMap } from 'rxjs';
-import { colorizeCourse, colorizeCourseBar, makeScoreGradient } from '../colorize';
+import { BehaviorSubject, switchMap } from 'rxjs';
+import { makeScoreGradient } from '../colorize';
 import { DataService } from '../data.service';
+import { OptionsService } from '../options.service';
 import {
   Course,
   courseGpaFromNormalizedScore,
@@ -37,12 +38,14 @@ import {
 })
 export class CourseViewerComponent {
 
-  constructor(private dataService: DataService,
+  constructor(
+    private options: OptionsService,
+    private dataService: DataService,
     @Inject(DOCUMENT) private document: Document) {
   }
 
   @Input() set index(value: number) { this.#index$.next(value); }
-  #index$ = new Subject<number>();
+  #index$ = new BehaviorSubject<number>(-1);
 
   #subscription = this.#index$.pipe(
     switchMap((idx) => this.dataService.course$(idx)),
@@ -73,8 +76,16 @@ export class CourseViewerComponent {
   gpa: number | null = null;
   extras: Element = undefined!;
 
+  tamper(val: string) {
+    this.dataService.tamper(this.#index$.value, val);
+  }
+  untamper() {
+    this.dataService.untamper(this.#index$.value);
+  }
+
+  judgeByGpa$ = this.options.judgeByGpa$;
+
   fix = fix;
   describe = describe;
-
   makeScoreGradient = makeScoreGradient;
 }

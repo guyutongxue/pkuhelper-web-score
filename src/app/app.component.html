@@ -1,10 +1,48 @@
+<div class="title-bar">
+  <div class="aux-margin">
+    <div class="title"><p class="centered-line">成绩查询</p></div>
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap">
+      请选择登录方式：
+      <div style="flex-grow: 1">
+        <div style="display: flex; flex-direction: row; flex-wrap: wrap">
+          <input
+            type="radio"
+            name="loginMethod"
+            id="pkuhelper"
+            value="pkuhelper"
+            [(ngModel)]="loginMethod"
+          />
+          <label for="pkuhelper">PKUHelper User Token</label>
+          <input
+            type="text"
+            style="margin-left: 1em; flex-grow: 1; font-family: Consolas, 'Courier New', monospace;"
+            [disabled]="loginMethod !== 'pkuhelper'"
+            [(ngModel)]="token"
+          />
+        </div>
+        <div>
+          <input
+            type="radio"
+            name="loginMethod"
+            id="iaaa"
+            value="iaaa"
+            [(ngModel)]="loginMethod"
+            disabled
+          />
+          <label for="iaaa">IAAA</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container">
   <app-controller></app-controller>
   <app-osu-button
     *ngIf="!(hasData | async); else viewer"
-    buttonText="查询"
+    [buttonText]="loading ? '...' : '查询'"
     text="点击按钮查询成绩"
     (click)="load()"
+    [disabled]="loading"
   >
   </app-osu-button>
   <ng-template #viewer>

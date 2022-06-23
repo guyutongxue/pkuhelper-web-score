@@ -1,6 +1,6 @@
 <div class="semester-block">
-  <div [ngClass]="tampered ? 'row-tampered' : ''">
-    <app-row-layout [background]="colorizeSemester(score, judgeByGpa)">
+  <div [ngClass]="{ 'row-tampered': tampered }">
+    <app-row-layout [background]="colorizeSemester(score, judgeByGpa$ | async)">
       <app-vertical-layout
         left
         [up]="fix(credit, 1)"
@@ -23,9 +23,11 @@
   <div
     *ngFor="let c of categories"
     class="course-row"
-    [ngClass]="tampered ? 'row-tampered' : ''"
+    [ngClass]="{ 'row-tampered': c.tampered }"
   >
-    <app-row-layout [background]="makeScoreGradient(c.score, judgeByGpa)">
+    <app-row-layout
+      [background]="makeScoreGradient(c.score, judgeByGpa$ | async)"
+    >
       <app-vertical-layout
         left
         [up]="fix(c.credit, 1)"
@@ -43,7 +45,6 @@
         [down]="fix(c.score, 1)"
         [needHideText]="true"
       ></app-vertical-layout>
-
     </app-row-layout>
   </div>
 </div>

@@ -15,29 +15,43 @@
 // You should have received a copy of the GNU General Public License
 // along with pkuhelper-web.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { OptionsService } from '../options.service';
 
 @Component({
   selector: 'app-vertical-layout',
   templateUrl: './vertical-layout.component.html',
   styleUrls: ['./vertical-layout.component.scss']
 })
-export class VerticalLayoutComponent implements OnInit {
+export class VerticalLayoutComponent implements OnChanges {
 
-  constructor() { }
+  constructor(private options: OptionsService) { }
 
   @Input() up = "";
   @Input() down = "";
   @Input() extra?: Element;
 
+  @Input() needHideText = false;
+  @Input() editable = false;
+  @Output() change = new EventEmitter<string>();
+
   showExtra = false;
 
-  @Input() needHideText = false;
+  hideText$ = this.options.hideText$;
 
-  ngOnInit(): void {
+  ngOnChanges() {
+    if (this.editable) {
+      this.inputValue = this.up;
+    }
   }
 
   toggleExtra() {
     this.showExtra = !this.showExtra;
+  }
+
+  inputValue = "";
+  emitValue() {
+    this.change.emit(this.inputValue);
+    this.inputValue = this.up;
   }
 }

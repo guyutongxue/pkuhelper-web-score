@@ -1,12 +1,12 @@
 <div class="semester-block">
-  <div [ngClass]="tampered ? 'row-tampered' : ''">
-    <app-row-layout [background]="colorizeSemester(score, judgeByGpa)">
+  <div [ngClass]="{ 'row-tampered': tampered }">
+    <app-row-layout [background]="colorizeSemester(score, judgeByGpa$ | async)">
       <app-vertical-layout left [up]="fix(credit, 1)" down="学分">
       </app-vertical-layout>
       <app-vertical-layout
         middle
         [up]="name"
-        down="共 {{courseList.length}} 门课程"
+        down="共 {{ courseList.length }} 门课程"
       >
       </app-vertical-layout>
       <app-vertical-layout
@@ -18,8 +18,6 @@
       </app-vertical-layout>
     </app-row-layout>
   </div>
-  <app-course-viewer
-    *ngFor="let course of courseList"
-    [index]="course"
-  ></app-course-viewer>
+  <app-course-viewer *ngFor="let course of courseList" [index]="course">
+  </app-course-viewer>
 </div>

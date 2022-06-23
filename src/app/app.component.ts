@@ -30,10 +30,24 @@ export class AppComponent {
 
   }
 
+  loginMethod: "pkuhelper" | "iaaa" = "pkuhelper";
+  token = localStorage['TOKEN'] ?? "";
+
+  loading = false;
   hasData = this.dataService.loaded$;
 
-  load() {
-    this.dataService.load();
+  async load() {
+    try {
+      this.loading = true;
+      if (this.loginMethod === "pkuhelper") {
+        await this.dataService.loadFromToken(this.token);
+        localStorage['TOKEN'] = this.token;
+      } else {
+        // TODO
+      }
+    } finally {
+      this.loading = false;
+    }
   }
 
 }

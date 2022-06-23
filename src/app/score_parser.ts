@@ -57,20 +57,21 @@ function normalizeScoreFromIsop(score: string): string | number {
   else return number;
 }
 
-// export function check_score(score) {
-//   if (!isNaN(score)) {
-//     score = parseFloat(score);
-//     return score <= 100.001 && score >= -0.001;
-//   } else {
-//     return STATIC_GPA[score] !== undefined;
-//   }
-// }
+export function checkScore(score: string) {
+  const number = Number(score);
+  if (!isNaN(number)) {
+    return number <= 100.001 && number >= -0.001;
+  } else {
+    return STATIC_GPA[score] !== undefined;
+  }
+}
 
 export function courseGpaFromNormalizedScore(
   score: string | number
 ): number | null {
-  if (typeof score === 'number') {
-    if (score >= 60) return 4 - (3 * Math.pow(100 - score, 2)) / 1600;
+  const number = Number(score);
+  if (!isNaN(number)) {
+    if (number >= 60) return 4 - (3 * Math.pow(100 - number, 2)) / 1600;
     else return null;
   } else {
     return STATIC_GPA[score] ?? null;
@@ -166,24 +167,24 @@ function extraInfos(row: ScoreBase) {
 }
 
 export type Course = {
-  id: string;
-  name: string;
-  type: string;
+  readonly id: string;
+  readonly name: string;
+  readonly type: string;
 
-  year: number;
-  semester: number;
-  semName: string;
-  semNameOriginal: string | undefined;
+  readonly year: number;
+  readonly semester: number;
+  readonly semName: string;
+  readonly semNameOriginal: string | undefined;
 
-  credit: number;
+  readonly credit: number;
   score: string | number;
-  trueScore: string | number;
-  isopGpa: string | null;
+  readonly trueScore: string | number;
+  readonly isopGpa: string | null;
 
-  details: string;
-  extras: [string, Node][];
+  readonly details: string;
+  readonly extras: [string, Node][];
 
-  firstTeacher: string;
+  readonly firstTeacher: string;
 };
 
 export type Semester = {

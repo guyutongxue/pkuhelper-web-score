@@ -29,7 +29,7 @@ import { shownScoreHelper } from '../shown_score_helper';
   templateUrl: './new-block-viewer.component.html',
   styleUrls: ['./new-block-viewer.component.scss'],
 })
-export class NewBlockViewerComponent implements OnInit {
+export class NewBlockViewerComponent {
   constructor(private dataService: DataService) {}
 
   hidden = false;
@@ -38,31 +38,30 @@ export class NewBlockViewerComponent implements OnInit {
   deltaGpa = 0;
   deltaType: 'up' | 'down' | 'keep' = 'keep';
 
-  ngOnInit(): void {
-    this.dataService.scores$
-      .pipe(
-        switchMap(({ courses }) =>
-          this.dataService.newBlock$.pipe(
-            map((newBlock) => ({
-              courses,
-              newBlock,
-            })),
-          )
-        ),
-        untilDestroyed(this)
-      ).subscribe(({ courses, newBlock }) => {
-        this.courses = newBlock;
-        const newGpa = calcGpa(courses);
-        const oldGpa = calcGpa(courses.filter((_, i) => !newBlock.includes(i)));
-        this.deltaGpa = Number(newGpa) - Number(oldGpa);
-        this.deltaType =
-          this.deltaGpa >= 0.0005
-            ? 'up'
-            : this.deltaGpa <= -0.0005
-            ? 'down'
-            : 'keep';
-      });
-  }
+  #subscription = this.dataService.scores$
+    .pipe(
+      switchMap(({ courses }) =>
+        this.dataService.newBlock$.pipe(
+          map((newBlock) => ({
+            courses,
+            newBlock,
+          }))
+        )
+      ),
+      untilDestroyed(this)
+    )
+    .subscribe(({ courses, newBlock }) => {
+      this.courses = newBlock;
+      const newGpa = calcGpa(courses);
+      const oldGpa = calcGpa(courses.filter((_, i) => !newBlock.includes(i)));
+      this.deltaGpa = Number(newGpa) - Number(oldGpa);
+      this.deltaType =
+        this.deltaGpa >= 0.0005
+          ? 'up'
+          : this.deltaGpa <= -0.0005
+          ? 'down'
+          : 'keep';
+    });
 
   colorizeNewBlock = colorizeNewBlock;
 

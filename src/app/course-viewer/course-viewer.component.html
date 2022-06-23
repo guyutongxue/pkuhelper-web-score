@@ -1,5 +1,5 @@
-<div [ngClass]="'course-row' + (tampered ? ' row-tampered' : '')">
-  <app-row-layout [background]="makeScoreGradient(score, false)">
+<div class="course-row" [ngClass]="{ 'row-tampered': tampered }">
+  <app-row-layout [background]="makeScoreGradient(score, judgeByGpa$ | async)">
     <app-vertical-layout left [up]="fix(credit, 1)" down="学分">
     </app-vertical-layout>
 
@@ -18,14 +18,24 @@
       [down]="details"
       [extra]="extras"
       [needHideText]="true"
-    ></app-vertical-layout>
     >
+      <span *ngIf="tampered"
+        class="prevent-click-handler course-badge course-badge-danger"
+        (click)="untamper()"
+        data-tooltip="非真实成绩"
+      >
+        <span class="icon icon-warning"></span>
+      </span>
+    </app-vertical-layout>
+
     <!-- <ScoreTamperer score={fix(props.course.score,1)} onChange={props.tamper_score} /> -->
     <app-vertical-layout
       right
       [up]="fix(score, 1)"
       [down]="gpa?.toFixed(2) ?? describe(score)"
       [needHideText]="gpa !== null || score < 60"
+      [editable]="true"
+      (change)="tamper($event)"
     >
     </app-vertical-layout>
   </app-row-layout>

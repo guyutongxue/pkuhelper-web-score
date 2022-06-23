@@ -15,3 +15,23 @@
   max-height: 7em;
   overflow-y: auto;
 }
+
+.score-hide {
+  opacity: 0;
+}
+
+.score-tamperer {
+  background-color: transparent;
+  border: 0;
+  font-family: unset;
+  text-align: center;
+  width: 2.5em;
+  font-size: unset;
+  text-shadow: 0 0 3px white;
+  line-height: 1em;
+  padding: 0;
+  margin: 0;
+}
+.score-tamperer:not(:focus) {
+  cursor: pointer;
+}

@@ -16,7 +16,7 @@
 // along with pkuhelper-web-score.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { DataService } from "../data.service";
 
 @Component({
@@ -32,6 +32,7 @@ export class ViewerComponent implements OnInit {
   hasNewBlock = this.dataService.newBlock$.pipe(
     map(b => b.length > 0)
   );
+  lastUpdatedTime$ = this.dataService.lastUpdatedTime$;
 
   ngOnInit(): void {
   }

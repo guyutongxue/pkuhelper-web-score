@@ -16,6 +16,7 @@
 // along with pkuhelper-web-score.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Component, OnInit } from '@angular/core';
+import { OptionsService } from '../options.service';
 
 @Component({
   selector: 'app-controller',
@@ -24,9 +25,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ControllerComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private options: OptionsService
+  ) { }
 
   ngOnInit(): void {
   }
 
+  hideText$ = this.options.hideText$;
+  judgeByGpa$ = this.options.judgeByGpa$;
+
+  toggleHideText() {
+    this.options.toggleHideText();
+  }
+  toggleJudgeByGpa() {
+    this.options.toggleJudgeByGpa();
+  }
 }

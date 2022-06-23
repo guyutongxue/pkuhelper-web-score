@@ -7,23 +7,6 @@
   box-shadow: 0 -1px 0 #7f7f7f;
 }
 
-.score-tamperer {
-  background-color: transparent;
-  border: 0;
-  font-family: unset;
-  text-align: center;
-  width: 2.5em;
-  font-size: unset;
-  text-decoration: unset;
-  text-shadow: 0 0 3px white;
-  line-height: 1em;
-  padding: 0;
-  margin: 0;
-}
-.score-tamperer:not(:focus) {
-  cursor: pointer;
-}
-
 .course-badge {
   display: inline-block;
   cursor: pointer;
@@ -71,7 +54,3 @@
   z-index: 100;
 }
 
-.row-tampered * {
-  text-decoration-line: line-through;
-  text-decoration-color: rgba(255,0,0,.5);
-}

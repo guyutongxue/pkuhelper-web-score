@@ -7,21 +7,21 @@
     <!-- {"time_left"}}s后刷新 -->
   </span>
   &nbsp; &nbsp;
-  <a (click)="(undefined)">
-    <span class="icon" [ngClass]="true ? 'icon-show' : 'icon-hide'"></span>
-    {{ true ? "显示文字" : "隐藏文字" }}
+  <a (click)="toggleHideText()">
+    <span class="icon" [ngClass]="(hideText$ | async) ? 'icon-show' : 'icon-hide'"></span>
+    {{ (hideText$ | async) ? "显示文字" : "隐藏文字" }}
   </a>
   &nbsp; &nbsp;
-  <a (click)="(undefined)">
+  <a (click)="toggleJudgeByGpa()">
     <span
       [title]="
-        true
-          ? '当前百分制着色，分数从60至100由红变绿'
-          : '当前四分制着色，GPA从1至4由红变绿'
+        (judgeByGpa$ | async)
+          ? '当前四分制着色，GPA 从 1 至 4 由红变绿'
+          : '当前百分制着色，分数从 60 至 100 由红变绿'
       "
     >
       <span class="icon icon-display"></span>
-      {{ true ? "百分制着色" : "四分制着色" }}
+      {{ (judgeByGpa$ | async) ? "百分制着色" : "四分制着色" }}
     </span>
   </a>
 </p>

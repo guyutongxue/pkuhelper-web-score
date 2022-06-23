@@ -20,13 +20,23 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  showCalculator() {
+    const x = Number(prompt('输入分数 (60 ~ 100）或绩点（1 ~ 4）来换算'));
+    if (x >= 60 && x <= 100) {
+      const y = 4 - (3 * Math.pow(100 - x, 2)) / 1600;
+      alert(`GPA(${x.toFixed(2)}) ≈ ${y.toFixed(2)}`);
+    } else if (x >= 1 && x <= 4) {
+      const y = 100 - Math.sqrt((1600 / 3) * (4 - x));
+      alert(`GPA(${y.toFixed(2)}) ≈ ${x.toFixed(2)}`);
+    } else {
+      alert('输入不合法。');
+    }
   }
-
 }

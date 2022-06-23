@@ -2,7 +2,7 @@
   <p class="refresh-time-line print-hide">
     <a (click)="(undefined)"> <span class="icon icon-reload"></span> 刷新</a>
     &nbsp;
-    <!-- <Time stamp={props.last_load_timestamp/1000} /> 更新 -->
+    {{ lastUpdatedTime$ | async | amLocale:'zh-cn' | amTimeAgo }}更新
   </p>
   <div class="viewer">
     <app-new-block-viewer *ngIf="hasNewBlock | async"></app-new-block-viewer>

@@ -31,6 +31,7 @@ import {
 import { colorizeSemester } from "../colorize";
 import { map, Subject, Subscription, switchMap, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { OptionsService } from '../options.service';
 
 @UntilDestroy()
 @Component({
@@ -39,7 +40,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./semester-viewer.component.scss'],
 })
 export class SemesterViewerComponent {
-  constructor(private dataService: DataService) { }
+  constructor(
+    private options: OptionsService,
+    private dataService: DataService) { }
 
   @Input() set sem(value: Semester) { this.#sem$.next(value); }
   #sem$ = new Subject<Semester>();
@@ -71,8 +74,7 @@ export class SemesterViewerComponent {
   tampered = false;
   courseList: number[] = [];
 
-  // TODO
-  judgeByGpa = false;
+  judgeByGpa$ = this.options.judgeByGpa$;
 
   colorizeSemester = colorizeSemester;
   fix = fix;

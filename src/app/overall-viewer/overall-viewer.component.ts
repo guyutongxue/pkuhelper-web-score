@@ -20,6 +20,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { colorizeSemester, makeScoreGradient } from '../colorize';
 import { DataService } from '../data.service';
+import { OptionsService } from "../options.service";
 import {
   calcGpa,
   fix,
@@ -47,6 +48,7 @@ interface Category {
 export class OverallViewerComponent implements OnInit {
   constructor(
     private dataService: DataService,
+    private options: OptionsService,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
@@ -106,8 +108,7 @@ export class OverallViewerComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // TODO
-  judgeByGpa = false;
+  judgeByGpa$ = this.options.judgeByGpa$;
 
   fix = fix;
   colorizeSemester = colorizeSemester;

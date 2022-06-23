@@ -5,7 +5,7 @@ import {
 } from './score_parser';
 
 // TODO 类型检查
-function prec(score: string | number, judgeByGpa: boolean) {
+function prec(score: string | number, judgeByGpa: boolean | null | undefined) {
   if (judgeByGpa) {
     const gpa = courseGpaFromNormalizedScore(score);
     // @ts-expect-error 如果 gpa 没有怎么办？
@@ -21,21 +21,27 @@ function cannotJudge(score: string | number) {
   return courseGpaFromNormalizedScore(score) === null;
 }
 
-export function colorizeSemester(score: string | number, judgeByGpa: boolean): string {
+export function colorizeSemester(
+  score: string | number,
+  judgeByGpa: boolean | null | undefined
+): string {
   if (cannotJudge(score)) return 'hsl(240,50%,90%)';
-  return `hsl(${120 * prec(score, judgeByGpa)},${
-    judgeByGpa ? 97 : 100
-  }%,70%)`;
+  return `hsl(${120 * prec(score, judgeByGpa)},${judgeByGpa ? 97 : 100}%,70%)`;
 }
 
-export function colorizeCourse(score: string | number, judgeByGpa: boolean): string {
+export function colorizeCourse(
+  score: string | number,
+  judgeByGpa: boolean | null | undefined
+): string {
   if (cannotJudge(score) || score < 60) return 'hsl(340,60%,65%)';
-  return `hsl(${120 * prec(score, judgeByGpa)},${
-    judgeByGpa ? 57 : 60
-  }%,65%)`;
+  return `hsl(${120 * prec(score, judgeByGpa)},${judgeByGpa ? 57 : 60}%,65%)`;
 }
 
-export function colorizeCourseBar(score: string | number, judgeByGpa: boolean, left = false): [string, string, number] {
+export function colorizeCourseBar(
+  score: string | number,
+  judgeByGpa: boolean | null | undefined,
+  left = false
+): [string, string, number] {
   let colorL, colorR, width;
   if (cannotJudge(score) || score < 60) {
     colorL = colorR = 'hsl(240,50%,90%)';
@@ -53,7 +59,10 @@ export function colorizeNewBlock() {
   return 'hsl(0,0%,90%)';
 }
 
-export function makeScoreGradient(score: number | string, judgeByGpa: boolean) {
+export function makeScoreGradient(
+  score: number | string,
+  judgeByGpa: boolean | null | undefined
+) {
   const [fgcolorl, fgcolorr, width] = colorizeCourseBar(score, judgeByGpa);
   let bgcolor = colorizeCourse(score, judgeByGpa);
   let widthPerc = width * 100 + '%';

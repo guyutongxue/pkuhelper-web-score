@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from "@angular/forms";
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -13,6 +14,7 @@ import { RowLayoutComponent } from './row-layout/row-layout.component';
 import { VerticalLayoutComponent } from './vertical-layout/vertical-layout.component';
 import { CourseViewerComponent } from './course-viewer/course-viewer.component';
 import { ClickHandlerDirective } from './click-handler.directive';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ClickHandlerDirective } from './click-handler.directive';
     ClickHandlerDirective
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    MomentModule
   ],
   providers: [],
   bootstrap: [AppComponent]

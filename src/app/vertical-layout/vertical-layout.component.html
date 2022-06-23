@@ -1,9 +1,27 @@
-<div appClickHandler
-  [ngClass]="'layout-vertical' + (false ? ' score-hide' : '')"
+<div
+  appClickHandler
+  class="layout-vertical"
+  [ngClass]="{ 'score-hide': needHideText && (hideText$ | async) }"
   (handlerClick)="extra && toggleExtra()"
 >
-  <div class="layout-vertical-up">{{ up }}</div>
+
+  <div class="layout-vertical-up">
+    <input *ngIf="editable; else staticUp"
+      #input
+      type="text"
+      class="score-tamperer"
+      [(ngModel)]="inputValue"
+      (keydown.enter)="input.blur()"
+      (blur)="emitValue()"
+    />
+    <ng-template #staticUp>
+      <ng-content></ng-content>
+      {{ up }}
+    </ng-template>
+  </div>
+
   <div class="layout-vertical-down">{{ down }}</div>
+
   <div
     *ngIf="extra"
     class="layout-vertical-extra layout-vertical-extra-{{

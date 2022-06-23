@@ -1,6 +1,6 @@
 <div
   class="semester-block new-block"
-  [ngClass]="hidden ? ' new-block-hidden' : ''"
+  [ngClass]="{ 'new-block-hidden': hidden }"
 >
   <div>
     <!-- {is_all_normal_distr && <Egg84 />} -->
@@ -9,7 +9,7 @@
         <svg
           viewBox="0 15 240 165"
           class="potential-svg"
-          [ngClass]="'potential-svg-'+deltaType"
+          [ngClass]="'potential-svg-' + deltaType"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
@@ -74,7 +74,13 @@
             stroke-width="1.5"
             id="potential-svg-text-down"
           >
-            {{ deltaType ==='up' ? ('+'+fix(deltaGpa)) : deltaType==='down' ? fix(deltaGpa) : '-KEEP-'}}
+            {{
+              deltaType === "up"
+                ? "+" + fix(deltaGpa)
+                : deltaType === "down"
+                ? fix(deltaGpa)
+                : "-KEEP-"
+            }}
           </text>
         </svg>
       </div>
