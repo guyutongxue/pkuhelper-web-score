@@ -10,17 +10,14 @@ class ShownScoreHelper {
     }
   }
   get() {
-    console.log('shown score helper get');
     return this.#shownScore;
   }
   set(s: string[]) {
-    console.log('shown score helper set');
     this.#pending = s;
     if (!this.#shownScore.length) this.apply();
   }
   apply() {
     if (this.#pending !== null) {
-      console.log('shown score helper apply');
       this.#shownScore = this.#pending;
       localStorage['SCORE_SHOWN'] = JSON.stringify(this.#pending);
     }

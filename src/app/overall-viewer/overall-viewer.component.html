@@ -1,1 +1,49 @@
-<p>overall-viewer works!</p>
+<div class="semester-block">
+  <div [ngClass]="tampered ? 'row-tampered' : ''">
+    <app-row-layout [background]="colorizeSemester(score, judgeByGpa)">
+      <app-vertical-layout
+        left
+        [up]="fix(credit, 1)"
+        down="学分"
+      ></app-vertical-layout>
+      <app-vertical-layout
+        middle
+        up="总绩点"
+        down="共 {{ length }} 门课程，官方 GPA：{{ isopGpa ?? '-.--' }}"
+        [needHideText]="true"
+      ></app-vertical-layout>
+      <app-vertical-layout
+        right
+        [up]="gpa?.toFixed(2) ?? '-.--'"
+        [down]="fix(score, 1)"
+        [needHideText]="true"
+      ></app-vertical-layout>
+    </app-row-layout>
+  </div>
+  <div
+    *ngFor="let c of categories"
+    class="course-row"
+    [ngClass]="tampered ? 'row-tampered' : ''"
+  >
+    <app-row-layout [background]="makeScoreGradient(c.score, judgeByGpa)">
+      <app-vertical-layout
+        left
+        [up]="fix(c.credit, 1)"
+        down="学分"
+      ></app-vertical-layout>
+      <app-vertical-layout
+        middle
+        [extra]="c.extras"
+        [up]="c.name"
+        down="共 {{ c.length }} 门课程"
+      ></app-vertical-layout>
+      <app-vertical-layout
+        right
+        [up]="c.gpa?.toFixed(2) ?? '-.--'"
+        [down]="fix(c.score, 1)"
+        [needHideText]="true"
+      ></app-vertical-layout>
+
+    </app-row-layout>
+  </div>
+</div>

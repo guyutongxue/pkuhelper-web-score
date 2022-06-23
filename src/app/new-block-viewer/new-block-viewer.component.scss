@@ -1,1 +1,75 @@
-// a
+.read-all-button {
+  height: 1.65em;
+  width: 5em;
+  font-size: 1em;
+  margin: .25em .5em;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: .25em;
+  cursor: pointer;
+  outline: none !important;
+}
+.read-all-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.new-block {
+  transition: opacity .15s ease-out;
+}
+.new-block-hidden {
+  opacity: 0;
+}
+
+@import "../semester-block.scss";
+
+.potential-svg {
+  height: 3em;
+  margin-bottom: -3em;
+  margin-left: .5em;
+  margin-right: .5em;
+  vertical-align: top;
+  transform: translateY(-.25em);
+  text-shadow: none;
+  pointer-events: none;
+}
+
+.potential-svg-keep #potential-svg-border-gradient-stop {
+  stop-color: #A38AA7;
+}
+.potential-svg-up #potential-svg-border-gradient-stop {
+  stop-color: rgba(137, 202, 207, 0.99);
+}
+.potential-svg-down #potential-svg-border-gradient-stop {
+  stop-color: #bd6675;
+}
+
+.potential-svg-keep #potential-svg-background-down {
+  fill: #5B406C;
+}
+.potential-svg-up #potential-svg-background-down {
+  fill: #2E4561;
+}
+.potential-svg-down #potential-svg-background-down {
+  fill: #632A43;
+}
+
+.potential-svg-keep #potential-svg-text-down {
+  font-size: 35px;
+  stroke: #473663;
+}
+.potential-svg-up #potential-svg-text-down {
+  font-size: 38px;
+  stroke: #4c9ca0;
+}
+.potential-svg-down #potential-svg-text-down {
+  font-size: 38px;
+  stroke: #87495f;
+}
+
+.potential-span {
+  margin: -.25em 0 -1em 0;
+  padding: .25em 0 1em 0;
+  cursor: help;
+}

@@ -5,15 +5,15 @@
       </app-vertical-layout>
       <app-vertical-layout
         middle
-        [up]="sem.name"
-        [down]="'共 ' + courseList.length.toString() + ' 门课程'"
+        [up]="name"
+        down="共 {{courseList.length}} 门课程"
       >
       </app-vertical-layout>
       <app-vertical-layout
         right
-        [up]="gpa !== null ? gpa.toFixed(2) : '-.--'"
+        [up]="gpa?.toFixed(2) ?? '-.--'"
         [down]="fix(score, 1)"
-        need_hide_text
+        [needHideText]="true"
       >
       </app-vertical-layout>
     </app-row-layout>

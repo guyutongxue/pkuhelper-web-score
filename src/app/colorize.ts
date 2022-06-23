@@ -52,3 +52,10 @@ export function colorizeCourseBar(score: string | number, judgeByGpa: boolean, l
 export function colorizeNewBlock() {
   return 'hsl(0,0%,90%)';
 }
+
+export function makeScoreGradient(score: number | string, judgeByGpa: boolean) {
+  const [fgcolorl, fgcolorr, width] = colorizeCourseBar(score, judgeByGpa);
+  let bgcolor = colorizeCourse(score, judgeByGpa);
+  let widthPerc = width * 100 + '%';
+  return `linear-gradient(to right, ${fgcolorl}, ${fgcolorr} ${widthPerc}, ${bgcolor} ${widthPerc})`;
+}

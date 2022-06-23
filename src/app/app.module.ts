@@ -12,6 +12,7 @@ import { OverallViewerComponent } from './overall-viewer/overall-viewer.componen
 import { RowLayoutComponent } from './row-layout/row-layout.component';
 import { VerticalLayoutComponent } from './vertical-layout/vertical-layout.component';
 import { CourseViewerComponent } from './course-viewer/course-viewer.component';
+import { ClickHandlerDirective } from './click-handler.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CourseViewerComponent } from './course-viewer/course-viewer.component';
     OverallViewerComponent,
     RowLayoutComponent,
     VerticalLayoutComponent,
-    CourseViewerComponent
+    CourseViewerComponent,
+    ClickHandlerDirective
   ],
   imports: [
     BrowserModule

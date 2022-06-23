@@ -1,1 +1,90 @@
-<p>new-block-viewer works!</p>
+<div
+  class="semester-block new-block"
+  [ngClass]="hidden ? ' new-block-hidden' : ''"
+>
+  <div>
+    <!-- {is_all_normal_distr && <Egg84 />} -->
+    <app-row-layout [background]="colorizeNewBlock()">
+      <div left title="△GPA = {{ deltaGpa.toFixed(4) }}" class="potential-span">
+        <svg
+          viewBox="0 15 240 165"
+          class="potential-svg"
+          [ngClass]="'potential-svg-'+deltaType"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient id="border-gradient" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#fafafa" />
+              <stop offset="1" id="potential-svg-border-gradient-stop" />
+            </linearGradient>
+            <filter
+              id="as-drop-shadow"
+              x="-100%"
+              y="-100%"
+              width="300%"
+              height="300%"
+            >
+              <feGaussianBlur in="SourceAlpha" stdDeviation="6" />
+            </filter>
+          </defs>
+          <path
+            d="m55.941667,4.725c0,0 -41.5,42.25 -41.5,42.25c0,0 104,105 104,105c0,0 106.75,-105.25 106.75,-105.25c0,0 -42.5,-42.25 -42.525,-42.225l-126.725,0.225z"
+            stroke="url(#border-gradient)"
+            stroke-width="4"
+            fill-opacity="0"
+            filter="url(#as-drop-shadow)"
+          />
+          <path
+            d="m55.491667,4.975c0,0 127.25,0 127.175,0.025c-0.075,0.025 42.075,41.475 42.075,41.475c0,0 -19.25,20 -19.25,20c0,0 -172.002907,0 -172.075,-0.225c-0.072093,-0.225 -18.925,-19.525 -19,-19.75l41.075,-41.525z"
+            fill="#1e162b"
+          />
+          <path
+            d="m24.491667,57.725c0,0 189,0.5 189,0.5c0,0 -94.5,93.5 -94.5,93.5l-94.5,-94z"
+            id="potential-svg-background-down"
+          />
+          <path
+            d="m55.941667,4.725c0,0 -41.5,42.25 -41.5,42.25c0,0 104,105 104,105c0,0 106.75,-105.25 106.75,-105.25c0,0 -42.5,-42.25 -42.525,-42.225l-126.725,0.225z"
+            stroke="url(#border-gradient)"
+            stroke-width="4"
+            fill-opacity="0"
+          />
+          <text
+            x="119.241667"
+            y="48.225"
+            fill="#ffffff"
+            font-family="Sans-serif"
+            font-size="32"
+            opacity="0.95"
+            text-anchor="middle"
+            xml-space="preserve"
+            letter-spacing="-1"
+          >
+            GPA
+          </text>
+          <text
+            x="119.241667"
+            y="109.725"
+            fill="#ffffff"
+            font-family="Sans-serif"
+            opacity="0.95"
+            text-anchor="middle"
+            xml-space="preserve"
+            font-weight="bold"
+            letter-spacing="-2"
+            stroke-width="1.5"
+            id="potential-svg-text-down"
+          >
+            {{ deltaType ==='up' ? ('+'+fix(deltaGpa)) : deltaType==='down' ? fix(deltaGpa) : '-KEEP-'}}
+          </text>
+        </svg>
+      </div>
+      <app-vertical-layout
+        middle
+        up="新增成绩"
+        down="共 {{ courses.length }} 门课程"
+      ></app-vertical-layout>
+      <button right (click)="done()" class="read-all-button">已阅</button>
+    </app-row-layout>
+  </div>
+  <app-course-viewer *ngFor="let c of courses" [index]="c"> </app-course-viewer>
+</div>

@@ -1,6 +1,6 @@
 <div [ngClass]="'course-row' + (tampered ? ' row-tampered' : '')">
-  <app-row-layout [background]="makeScoreGradient(course.score, false)">
-    <app-vertical-layout left [up]="fix(course.credit, 1)" down="学分">
+  <app-row-layout [background]="makeScoreGradient(score, false)">
+    <app-vertical-layout left [up]="fix(credit, 1)" down="学分">
     </app-vertical-layout>
 
     <!-- {
@@ -14,18 +14,18 @@
              } -->
     <app-vertical-layout
       middle
-      [up]="course.name"
-      [down]="course.details"
+      [up]="name"
+      [down]="details"
       [extra]="extras"
-      [hideText]="true"
+      [needHideText]="true"
     ></app-vertical-layout>
     >
     <!-- <ScoreTamperer score={fix(props.course.score,1)} onChange={props.tamper_score} /> -->
     <app-vertical-layout
       right
-      [up]="fix(course.score, 1)"
-      [down]="gpa !== null ? gpa.toFixed(2) : describe(course.score)"
-      [hideText]="gpa !== null || course.score < 60"
+      [up]="fix(score, 1)"
+      [down]="gpa?.toFixed(2) ?? describe(score)"
+      [needHideText]="gpa !== null || score < 60"
     >
     </app-vertical-layout>
   </app-row-layout>

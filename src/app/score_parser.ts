@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with pkuhelper-web.  If not, see <http://www.gnu.org/licenses/>.
 
-import { shownScoreHelper } from './shown_score_helper';
 import type { IsopScores, ScoreBase } from './api';
 
 const STATIC_GPA: Record<string, number | null> = {
@@ -141,6 +140,7 @@ function extraInfos(row: ScoreBase) {
       );
       ele.setAttribute('target', '_blank');
       ele.setAttribute('rel', 'noopener noreferrer');
+      ele.classList.add('prevent-click-handler');
       ele.innerHTML = v;
       return ele;
     },
@@ -197,7 +197,6 @@ export type ParseResult = {
   semesters: Semester[];
   courses: Course[];
   isopGpa: string | null;
-  newBlock: number[];
 };
 
 export function parseScore(json: IsopScores): ParseResult {
@@ -249,9 +248,6 @@ export function parseScore(json: IsopScores): ParseResult {
     };
   });
 
-  const shown = shownScoreHelper.get();
-  let newBlockList: number[] = [];
-
   let semesters: Record<string, Semester> = {};
   courses.forEach((course, idx) => {
     let sem = course.semName;
@@ -266,18 +262,7 @@ export function parseScore(json: IsopScores): ParseResult {
       };
     }
     semesters[sem].courseList.push(idx);
-
-    if (!shown.includes(course.id)) {
-      newBlockList.push(idx);
-    }
   });
-
-  if (shown.length === 0) {
-    // 第一次打开页面时，不显示“新增成绩”
-    newBlockList = [];
-  }
-
-  shownScoreHelper.set(courses.map((c) => c.id));
 
   const semestersArr = Object.values(semesters).sort((c1, c2) =>
     c1.year !== c2.year ? c2.year - c1.year : c2.semester - c1.semester
@@ -287,13 +272,13 @@ export function parseScore(json: IsopScores): ParseResult {
     courses: courses,
     isopGpa: json.xslb === 'yjs' ? null : json.gpa.gpa,
     semesters: semestersArr,
-    newBlock: newBlockList,
   };
 }
 
-export function calcGpa(courses: Course[], idxs: number[]): number | null {
+export function calcGpa(courses: Course[], idxs?: number[]): number | null {
   let totCredit = 0;
   let totGpa = 0;
+  idxs ??= Array.from(courses.keys());
   idxs.forEach((idx) => {
     let co = courses[idx];
     let gpa = courseGpaFromNormalizedScore(co.score);
@@ -306,8 +291,9 @@ export function calcGpa(courses: Course[], idxs: number[]): number | null {
   else return null;
 }
 
-export function sumCredit(courses: Course[], idxs: number[]): number {
+export function sumCredit(courses: Course[], idxs?: number[]): number {
   let totCredit = 0;
+  idxs ??= Array.from(courses.keys());
   idxs.forEach((idx) => {
     if (shouldCalcCredit(courses[idx].score))
       totCredit += courses[idx].credit;

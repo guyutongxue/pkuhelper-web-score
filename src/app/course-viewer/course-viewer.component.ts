@@ -16,8 +16,10 @@
 // along with pkuhelper-web.  If not, see <http://www.gnu.org/licenses/>.
 
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, Input, OnChanges, OnInit } from '@angular/core';
-import { colorizeCourse, colorizeCourseBar } from '../colorize';
+import { Component, Inject, Input } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Subject, Subscription, switchMap } from 'rxjs';
+import { colorizeCourse, colorizeCourseBar, makeScoreGradient } from '../colorize';
 import { DataService } from '../data.service';
 import {
   Course,
@@ -27,49 +29,52 @@ import {
   scoreTampered,
 } from '../score_parser';
 
+@UntilDestroy()
 @Component({
   selector: 'app-course-viewer',
   templateUrl: './course-viewer.component.html',
   styleUrls: ['./course-viewer.component.scss'],
 })
-export class CourseViewerComponent implements OnChanges {
+export class CourseViewerComponent {
+
   constructor(private dataService: DataService,
     @Inject(DOCUMENT) private document: Document) {
-    dataService.scores$.subscribe((data) => {
-      this.#courses = data.courses;
-    });
   }
 
-  @Input() index: number = null!;
+  @Input() set index(value: number) { this.#index$.next(value); }
+  #index$ = new Subject<number>();
 
-  #courses: Course[] = [];
-  course = this.#courses[0];
+  #subscription = this.#index$.pipe(
+    switchMap((idx) => this.dataService.course$(idx)),
+    untilDestroyed(this)
+  ).subscribe((course) => {
+    this.name = course.name;
+    this.details = course.details;
+    this.credit = course.credit;
+    this.score = course.score;
+    this.tampered = scoreTampered([course]);
+    this.gpa = courseGpaFromNormalizedScore(course.score);
+    const extraEle = this.document.createElement("p");
+    for (const [k, n] of course.extras) {
+      const keyEle = this.document.createElement("strong");
+      keyEle.innerText = k + '：';
+      extraEle.appendChild(keyEle);
+      extraEle.appendChild(n.cloneNode(true));
+      extraEle.appendChild(this.document.createElement("br"));
+    }
+    this.extras = extraEle;
+  });
+
+  name = "";
+  details = "";
+  credit = 0;
+  score: string | number = 0;
   tampered = false;
   gpa: number | null = null;
   extras: Element = undefined!;
 
-  ngOnChanges() {
-    this.course = this.#courses[this.index];
-    this.tampered = scoreTampered([this.course]);
-    this.gpa = courseGpaFromNormalizedScore(this.course.score);
-    const extraEle = this.document.createElement("p");
-    for (const [k, n] of this.course.extras) {
-      const keyEle = this.document.createElement("strong");
-      keyEle.innerText = k + '：';
-      extraEle.appendChild(keyEle);
-      extraEle.appendChild(n);
-      extraEle.appendChild(this.document.createElement("br"));
-    }
-    this.extras = extraEle;
-  }
-
   fix = fix;
   describe = describe;
 
-  makeScoreGradient(score: number | string, judgeByGpa: boolean) {
-    const [fgcolorl, fgcolorr, width] = colorizeCourseBar(score, judgeByGpa);
-    let bgcolor = colorizeCourse(score, judgeByGpa);
-    let widthPerc = width * 100 + '%';
-    return `linear-gradient(to right, ${fgcolorl}, ${fgcolorr} ${widthPerc}, ${bgcolor} ${widthPerc})`;
-  }
+  makeScoreGradient = makeScoreGradient;
 }

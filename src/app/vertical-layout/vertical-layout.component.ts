@@ -28,11 +28,16 @@ export class VerticalLayoutComponent implements OnInit {
 
   @Input() up = "";
   @Input() down = "";
-  @Input() extra: Element = undefined!;
+  @Input() extra?: Element;
 
-  @Input() hideText = false;
+  showExtra = false;
+
+  @Input() needHideText = false;
 
   ngOnInit(): void {
   }
 
+  toggleExtra() {
+    this.showExtra = !this.showExtra;
+  }
 }

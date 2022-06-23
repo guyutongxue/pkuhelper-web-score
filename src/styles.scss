@@ -13,6 +13,10 @@ a {
   cursor: pointer;
 }
 
+p {
+  margin: 0;
+}
+
 @media print {
   body {
     background-color: white !important;

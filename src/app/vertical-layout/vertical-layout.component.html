@@ -1,14 +1,14 @@
-<div [ngClass]="'layout-vertical' + (false ? ' score-hide' : '')">
-  <!-- <ClickHandler callback={this.on_click.bind(this)}> -->
+<div appClickHandler
+  [ngClass]="'layout-vertical' + (false ? ' score-hide' : '')"
+  (handlerClick)="extra && toggleExtra()"
+>
   <div class="layout-vertical-up">{{ up }}</div>
   <div class="layout-vertical-down">{{ down }}</div>
   <div
-    *ngIf="true"
-    [ngClass]="
-      'layout-vertical-extra layout-vertical-extra-' +
-      (hideText ? 'show' : 'hide')
-    "
+    *ngIf="extra"
+    class="layout-vertical-extra layout-vertical-extra-{{
+      showExtra ? 'show' : 'hide'
+    }}"
     [innerHTML]="extra?.outerHTML ?? ''"
   ></div>
-  <!-- </ClickHandler> -->
 </div>

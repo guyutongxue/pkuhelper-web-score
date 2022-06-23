@@ -5,7 +5,7 @@
     <!-- <Time stamp={props.last_load_timestamp/1000} /> 更新 -->
   </p>
   <div class="viewer">
-    <app-new-block-viewer *ngIf="false"></app-new-block-viewer>
+    <app-new-block-viewer *ngIf="hasNewBlock | async"></app-new-block-viewer>
     <app-semester-viewer
       *ngFor="let sem of (data | async)?.semesters"
       [sem]="sem"
