@@ -61,6 +61,11 @@ export class NewBlockViewerComponent {
           : this.deltaGpa <= -0.0005
           ? 'down'
           : 'keep';
+
+      if (newBlock.length > 0 && Notification.permission === 'granted')
+        new Notification(`新增 ${newBlock.length} 门成绩`, {
+          body: `${newBlock.map((co) => courses[co].name).join('、')}`,
+        });
     });
 
   colorizeNewBlock = colorizeNewBlock;

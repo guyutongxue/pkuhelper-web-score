@@ -83,11 +83,23 @@
           "options": {
             "browserTarget": "score:build"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": "22d22947-a4f0-4a01-bd4e-46fd2b8d2284"
+    "analytics": "22d22947-a4f0-4a01-bd4e-46fd2b8d2284",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

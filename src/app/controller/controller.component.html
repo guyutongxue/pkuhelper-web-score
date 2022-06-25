@@ -1,14 +1,17 @@
 <p class="controller-bar print-hide">
-  <span>
-    <a (click)="(undefined)">
-      <span class="icon icon-refresh"></span>
-      自动刷新
-    </a>
-    <!-- {"time_left"}}s后刷新 -->
-  </span>
+  <a (click)="toggleAutoReload()">
+    <span class="icon icon-refresh"></span>
+    <span *ngIf="interval === null"> 自动刷新 </span>
+    <span *ngIf="interval !== null">
+      {{ nextUpdateTime | amLocale: "zh-cn" | amTimeAgo }}刷新
+    </span>
+  </a>
   &nbsp; &nbsp;
   <a (click)="toggleHideText()">
-    <span class="icon" [ngClass]="(hideText$ | async) ? 'icon-show' : 'icon-hide'"></span>
+    <span
+      class="icon"
+      [ngClass]="(hideText$ | async) ? 'icon-show' : 'icon-hide'"
+    ></span>
     {{ (hideText$ | async) ? "显示文字" : "隐藏文字" }}
   </a>
   &nbsp; &nbsp;

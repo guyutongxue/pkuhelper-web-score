@@ -1,7 +1,10 @@
-<div class="footer">
+<div id="footer">
   <p>
     绩点公式
-    <a (click)="showCalculator()" style="font-family: 'Times New Roman', Georgia, serif;">
+    <a
+      (click)="showCalculator()"
+      style="font-family: 'Times New Roman', Georgia, serif"
+    >
       GPA(<i>x</i>) = 4 - 3 × (100 - <i>x</i>)<sup>2</sup> ÷ 1600
     </a>
   </p>
@@ -16,6 +19,7 @@
     <a href="https://github.com/Guyutongxue/pkuhelper-web-score" target="_blank"
       >GitHub</a
     >
-    开源
+    开源 ·
+    <a (click)="showEula.emit()">用户须知</a>
   </p>
 </div>

@@ -15,39 +15,30 @@
 // You should have received a copy of the GNU General Public License
 // along with pkuhelper-web-score.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs';
 import { DataService } from './data.service';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
-  constructor(private dataService: DataService) {
-
-  }
-
-  loginMethod: "pkuhelper" | "iaaa" = "pkuhelper";
-  token = localStorage['TOKEN'] ?? "";
+  constructor(public auth: AuthService, private dataService: DataService) {}
 
   loading = false;
   hasData = this.dataService.loaded$;
 
-  async load() {
-    try {
-      this.loading = true;
-      if (this.loginMethod === "pkuhelper") {
-        await this.dataService.loadFromToken(this.token);
-        localStorage['TOKEN'] = this.token;
-      } else {
-        // TODO
-      }
-    } finally {
-      this.loading = false;
-    }
+  eulaAcceptance = localStorage['EULA'] === 'accepted';
+  acceptEula() {
+    this.eulaAcceptance = true;
+    localStorage['EULA'] = 'accepted';
+    Notification.requestPermission();
   }
-
+  declineEula() {
+    localStorage.removeItem('EULA');
+    location.href = 'about:blank';
+  }
 }

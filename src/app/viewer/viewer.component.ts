@@ -15,8 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with pkuhelper-web-score.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { AuthService } from '../auth.service';
 import { DataService } from "../data.service";
 
 @Component({
@@ -24,17 +25,16 @@ import { DataService } from "../data.service";
   templateUrl: './viewer.component.html',
   styleUrls: ['./viewer.component.scss']
 })
-export class ViewerComponent implements OnInit {
+export class ViewerComponent {
 
-  constructor(private dataService: DataService) { }
+  constructor(
+    public auth: AuthService,
+    private dataService: DataService) { }
 
   data = this.dataService.scores$;
   hasNewBlock = this.dataService.newBlock$.pipe(
     map(b => b.length > 0)
   );
   lastUpdatedTime$ = this.dataService.lastUpdatedTime$;
-
-  ngOnInit(): void {
-  }
 
 }

@@ -4,8 +4,6 @@ import type { ApiResult, IsopScores } from './api';
 import { checkScore, ParseResult, parseScore } from './score_parser';
 import { shownScoreHelper } from './shown_score_helper';
 
-import TEMP from './temp.json';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -18,12 +16,11 @@ export class DataService {
   scores$ = this.#scores$.pipe(filter((s): s is ParseResult => s !== null));
 
   /** 是否有数据 */
-  loaded$ = this.#scores$.pipe(map((src) => src !== null));
+  loaded$ = this.#dataSource$.pipe(map((src) => src !== null));
 
   /** 具体到某个课程的信息 */
   course$ = (idx: number) =>
-    this.#scores$.pipe(
-      filter((s): s is ParseResult => s !== null),
+    this.scores$.pipe(
       map((scores) => scores.courses[idx]),
       filter((c) => typeof c !== 'undefined')
     );
@@ -37,20 +34,21 @@ export class DataService {
     // 数据源有新数据后，解析到结果
     this.#dataSource$
       .pipe(
-        filter((src): src is IsopScores => src !== null),
-        map((src) => parseScore(src))
+        map((src) => src === null ? null : parseScore(src))
       )
       .subscribe((scores) => {
         this.lastUpdatedTime$.next(new Date());
         console.log(scores);
         this.#scores$.next(scores);
-        this.#updateNewBlock(scores);
+        if (scores !== null) {
+          this.#updateNewBlock(scores);
+        }
       });
   }
 
-  async loadFromToken(token: string) {
+  async loadFromUrl(url: string) {
     try {
-      const src: ApiResult = await fetch(`https://pkuhelper.pku.edu.cn/api_xmcp/isop/scores?user_token=${encodeURIComponent(token)}`).then(r => r.json());
+      const src: ApiResult = await fetch(url).then(r => r.json());
       if (src.success) {
         this.#dataSource$.next(src);
       } else {
@@ -65,6 +63,9 @@ export class DataService {
       }
       console.error(e);
     }
+  }
+  clear() {
+    this.#dataSource$.next(null);
   }
 
   #updateNewBlock(scores: ParseResult) {

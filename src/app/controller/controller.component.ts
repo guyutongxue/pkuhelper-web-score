@@ -16,6 +16,7 @@
 // along with pkuhelper-web-score.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 import { OptionsService } from '../options.service';
 
 @Component({
@@ -26,6 +27,7 @@ import { OptionsService } from '../options.service';
 export class ControllerComponent implements OnInit {
 
   constructor(
+    public auth: AuthService,
     private options: OptionsService
   ) { }
 
@@ -40,5 +42,18 @@ export class ControllerComponent implements OnInit {
   }
   toggleJudgeByGpa() {
     this.options.toggleJudgeByGpa();
+  }
+
+  readonly INTERVAL = 300 * 1000;
+  interval: number | null = null;
+  nextUpdateTime = 0;
+  toggleAutoReload() {
+    if (this.interval) {
+      clearInterval(this.interval);
+      this.interval = null;
+    } else {
+      this.nextUpdateTime += Date.now() + this.INTERVAL;
+      this.interval = setInterval(() => this.auth.load(), this.INTERVAL);
+    }
   }
 }

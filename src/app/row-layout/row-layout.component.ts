@@ -26,7 +26,10 @@ export class RowLayoutComponent implements OnInit {
 
   constructor() { }
 
-  @Input() background: string = "unset";
+  @Input() background = "unset";
+
+  /** 启用彩虹色滚动动画 */
+  @Input() rainbow = false;
 
   ngOnInit(): void {
   }

@@ -27,6 +27,7 @@ import {
   courseGpaFromNormalizedScore,
   describe,
   fix,
+  isFull,
   scoreTampered,
 } from '../score_parser';
 
@@ -88,4 +89,5 @@ export class CourseViewerComponent {
   fix = fix;
   describe = describe;
   makeScoreGradient = makeScoreGradient;
+  isFull = isFull;
 }

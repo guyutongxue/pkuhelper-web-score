@@ -1,5 +1,5 @@
 <div class="course-row" [ngClass]="{ 'row-tampered': tampered }">
-  <app-row-layout [background]="makeScoreGradient(score, judgeByGpa$ | async)">
+  <app-row-layout [background]="makeScoreGradient(score, judgeByGpa$ | async)" [rainbow]="!tampered && isFull(score)">
     <app-vertical-layout left [up]="fix(credit, 1)" down="学分">
     </app-vertical-layout>
 

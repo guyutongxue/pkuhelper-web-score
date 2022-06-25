@@ -1,11 +1,11 @@
 .layout-row {
   display: flex;
-  padding-top: .25em;
-  padding-bottom: .25em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
   color: black;
   text-shadow: 0 0 3px white;
 }
-.layout-row>* {
+.layout-row > * {
   z-index: 5;
 }
 
@@ -19,4 +19,17 @@
 .layout-row-right {
   flex: 0 0 2.5em;
   text-align: center;
+}
+
+.rainbow {
+  animation: rainbow-moving 5s linear infinite;
+}
+
+@keyframes rainbow-moving {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: -1000px;
+  }
 }

@@ -87,6 +87,10 @@ export function isFail(score: string | number): boolean {
   return score === 'NP' || score === 'F' || (!isNaN(Number(score)) && score < 60);
 }
 
+export function isFull(score: string | number): boolean {
+  return score === "A+" || Number(score) > 99.995;
+}
+
 function shouldCalcCredit(score: string | number): boolean {
   return (
     isSpecialCredit(score) || courseGpaFromNormalizedScore(score) !== null

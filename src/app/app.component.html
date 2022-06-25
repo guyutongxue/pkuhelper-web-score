@@ -1,35 +1,51 @@
 <div class="title-bar">
   <div class="aux-margin">
     <div class="title"><p class="centered-line">成绩查询</p></div>
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap">
-      请选择登录方式：
-      <div style="flex-grow: 1">
-        <div style="display: flex; flex-direction: row; flex-wrap: wrap">
+    <div class="flex flex-row flex-wrap">
+      <strong>登录方式</strong>
+      <div class="flex-grow">
+        <div class="flex flex-row items-center mb-2">
           <input
             type="radio"
             name="loginMethod"
             id="pkuhelper"
             value="pkuhelper"
-            [(ngModel)]="loginMethod"
+            class="mx-2 radio-xs"
+            [(ngModel)]="auth.loginMethod"
           />
-          <label for="pkuhelper">PKUHelper User Token</label>
+          <label for="pkuhelper" class="label-text"> 北大地带用户令牌 </label>
           <input
             type="text"
-            style="margin-left: 1em; flex-grow: 1; font-family: Consolas, 'Courier New', monospace;"
-            [disabled]="loginMethod !== 'pkuhelper'"
-            [(ngModel)]="token"
+            placeholder="令牌"
+            class="flex-grow font-mono input input-xs ml-2"
+            [disabled]="auth.loginMethod !== 'pkuhelper'"
+            [(ngModel)]="auth.token"
           />
         </div>
-        <div>
+        <div class="flex flex-row items-center mb-2">
           <input
             type="radio"
             name="loginMethod"
             id="iaaa"
             value="iaaa"
-            [(ngModel)]="loginMethod"
-            disabled
+            class="mx-2 radio-xs"
+            [(ngModel)]="auth.loginMethod"
           />
-          <label for="iaaa">IAAA</label>
+          <label for="iaaa" class="label-text"> 北京大学统一身份认证 </label>
+          <input
+            type="text"
+            placeholder="学号"
+            class="flex-grow font-mono input input-xs ml-2"
+            [disabled]="auth.loginMethod !== 'iaaa'"
+            [(ngModel)]="auth.username"
+          />
+          <input
+            type="password"
+            placeholder="密码"
+            class="flex-grow font-mono input input-xs ml-2"
+            [disabled]="auth.loginMethod !== 'iaaa'"
+            [(ngModel)]="auth.password"
+          />
         </div>
       </div>
     </div>
@@ -39,14 +55,49 @@
   <app-controller></app-controller>
   <app-osu-button
     *ngIf="!(hasData | async); else viewer"
-    [buttonText]="loading ? '...' : '查询'"
+    [buttonText]="auth.loading ? '...' : auth.invalid ? '请先登录' : '查询'"
     text="点击按钮查询成绩"
-    (click)="load()"
-    [disabled]="loading"
+    (click)="auth.load()"
+    [disabled]="auth.loading || auth.invalid"
   >
   </app-osu-button>
   <ng-template #viewer>
     <app-viewer></app-viewer>
   </ng-template>
-  <app-footer></app-footer>
+  <app-footer (showEula)="eulaAcceptance = false"></app-footer>
+</div>
+<!-- 用户须知 -->
+<input type="checkbox" id="eulaModal" class="modal-toggle" [checked]="!eulaAcceptance" />
+<div class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg mb-3">用户须知</h3>
+    <div class="h-[350px] overflow-auto">
+      <p class="mb-2 font-bold">
+        请仔细阅读以下内容。点击本弹窗的“继续”按钮或使用本网站的任何功能即视为您同意以下条款。
+      </p>
+      <p class="mb-2">
+        本网站是北大地带（PKUHelper）成绩查询页面的重新实现。本网站将使用以下两种方式之一以获取您的成绩信息：
+      </p>
+      <ul class="list-disc list-inside mb-2">
+        <li>使用北大地带用户令牌（PKUHelper User Token）</li>
+        <li>使用北京大学统一认证</li>
+      </ul>
+      <p class="mb-2">
+        <strong>本网站承诺不会收集您的任何认证凭证</strong>，包括北大地带用户令牌、您的北京大学学号和北京大学门户密码。
+      </p>
+      <p class="mb-2">
+        您的北大地带用户令牌仅将用于发送给北大地带服务器（<code>pkuhelper.pku.edu.cn</code>）的相关 API，以获取您的成绩信息。该功能全部在您的浏览器内实现。您可以随时通过<a href="https://pkuhelper.pku.edu.cn/hole">P大树洞</a>的账户界面获取或重置您的用户令牌。
+      </p>
+      <p class="mb-2">
+        您的北京大学学号、北京大学门户密码仅将发送给北京大学统一认证服务器（<code>iaaa.pku.edu.cn</code>）。本网站将利用该服务器返回的令牌、北京大学门户（<code>portal.pku.edu.cn</code>）返回的令牌以获取您的成绩信息。此功能使用 Vercel Serverless Function 部署，并与本项目一同开源；如果您不信任我们的承诺，您可以选择关闭本网页。
+      </p>
+      <p class="mb-2">
+        您的北大地带用户令牌、北京大学学号将仅存储在浏览器端的本地存储（Local Storage）。此外，本网站不会以任何方式存储您的北京大学门户密码。本网站不会将您的上述凭证发送到任何除上述服务器外的其他服务器。
+      </p>
+    </div>
+      <div class="modal-action">
+        <button class="btn btn-ghost" (click)="declineEula()">拒绝</button>
+        <button class="btn" (click)="acceptEula()">继续</button>
+      </div>
+  </div>
 </div>

@@ -2,6 +2,7 @@ import {
   courseGpaFromNormalizedScore,
   guessScoreFromGpa,
   isFail,
+  isFull,
 } from './score_parser';
 
 // TODO 类型检查
@@ -47,7 +48,7 @@ export function colorizeCourseBar(
     colorL = colorR = 'hsl(240,50%,90%)';
     width = isFail(score) ? 0 : 1;
   } else {
-    let p = prec(score, judgeByGpa);
+    const p = prec(score, judgeByGpa);
     colorL = `hsl(${120 * p},${judgeByGpa ? 97 : 100}%,75%)`;
     colorR = `hsl(${120 * p},${judgeByGpa ? 97 : 100}%,70%)`;
     width = Math.max(p, 0.01);
@@ -63,6 +64,15 @@ export function makeScoreGradient(
   score: number | string,
   judgeByGpa: boolean | null | undefined
 ) {
+  if (isFull(score)) {
+    return `linear-gradient(-45deg,
+  hsl(120, 90%, 88%), hsl(0, 100%, 91%), hsl(240, 100%, 91%),
+  hsl(120, 90%, 88%), hsl(0, 100%, 91%), hsl(240, 100%, 91%),
+  hsl(120, 90%, 88%), hsl(0, 100%, 91%), hsl(240, 100%, 91%),
+  hsl(120, 90%, 88%), hsl(0, 100%, 91%), hsl(240, 100%, 91%),
+  hsl(120, 90%, 88%)
+) 0 0/1800px 200px`;
+  }
   const [fgcolorl, fgcolorr, width] = colorizeCourseBar(score, judgeByGpa);
   let bgcolor = colorizeCourse(score, judgeByGpa);
   let widthPerc = width * 100 + '%';

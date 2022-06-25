@@ -6,4 +6,16 @@
 
 > 我曾询问 [@xmcp](https://github.com/xmcp) 是否可提供代码，对方已读不回。（？？？）
 
-出于保护性的目的，我计划重建本项目源码；但由于我不熟悉 React，我将改用 Angular 重写。获取成绩的 API 暂时仍使用 `pkuhelper.pku.edu.cn/api_xmcp`。但由于该 API 并不可靠，我有可能会添加直接从 Portal 获取成绩的方法。
+出于保护性的目的，我计划重建本项目源码；但由于我不熟悉 React，便改用 Angular 重写。获取成绩的 API 仍保留为 `pkuhelper.pku.edu.cn/api_xmcp`。但由于该 API 并不可靠，我同时添加直接从北大门户获取成绩的方法。
+
+## 与现在运行的 PKUHelper 成绩查询的不同点
+
+- 由于改用 Angular 重写，某些细节可能不同。比如：
+  - GPA 计算器的显示方式不同；
+  - 刷新时间的显示文字不同；
+  - 在第一次打开网页时就询问通知权限；
+  - 允许通过修改分数来查看“彩虹”效果，但没有动态效果；
+  - ……
+- 移除了指向[“课程测评”](https://courses.pinzhixiaoyuan.com/)的链接。与 PKUHelper 不同，本项目与“课程测评”不存在合作关系；因此本项目不能冒用 PKUHelper 的身份与“课程测评”通信。
+- 为强调项目的严肃性，移除了“八十四”彩蛋。
+- 增加了 IAAA 登录（通过 Vercel Serverless Function 部署）。

@@ -1,6 +1,6 @@
 <div>
   <p class="refresh-time-line print-hide">
-    <a (click)="(undefined)"> <span class="icon icon-reload"></span> 刷新</a>
+    <a (click)="auth.load()"> <span class="icon icon-reload"></span> 刷新</a>
     &nbsp;
     {{ lastUpdatedTime$ | async | amLocale:'zh-cn' | amTimeAgo }}更新
   </p>

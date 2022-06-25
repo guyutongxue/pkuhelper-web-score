@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with pkuhelper-web-score.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
@@ -39,4 +39,6 @@ export class FooterComponent implements OnInit {
       alert('输入不合法。');
     }
   }
+
+  @Output() showEula = new EventEmitter();
 }

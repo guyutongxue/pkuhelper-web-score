@@ -22,6 +22,11 @@ class ShownScoreHelper {
       localStorage['SCORE_SHOWN'] = JSON.stringify(this.#pending);
     }
   }
+  clear() {
+    this.#shownScore = [];
+    this.#pending = null;
+    localStorage['SCORE_SHOWN'] = JSON.stringify([]);
+  }
 }
 
 export const shownScoreHelper = new ShownScoreHelper();
