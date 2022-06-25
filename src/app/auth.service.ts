@@ -16,10 +16,6 @@ export class AuthService {
 
   constructor(private dataService: DataService) { }
 
-  get invalid() {
-    return (this.loginMethod === 'pkuhelper' && !this.token) || !this.username;
-  }
-
   async load() {
     this.loading = true;
     try {
