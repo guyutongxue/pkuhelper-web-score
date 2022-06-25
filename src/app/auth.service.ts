@@ -31,6 +31,7 @@ export class AuthService {
           shownScoreHelper.clear();
         }
         await this.dataService.loadFromUrl(`/api/iaaa?username=${encodeURIComponent(this.username)}&password=${encodeURIComponent(this.password)}`);
+        localStorage['USERNAME'] = this.username;
       }
     } finally {
       this.loading = false;

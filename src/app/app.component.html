@@ -1,56 +1,4 @@
-<div class="title-bar">
-  <div class="aux-margin">
-    <div class="title"><p class="centered-line">成绩查询</p></div>
-    <div class="flex flex-row flex-wrap">
-      <strong>登录方式</strong>
-      <div class="flex-grow">
-        <div class="flex flex-row items-center mb-2">
-          <input
-            type="radio"
-            name="loginMethod"
-            id="pkuhelper"
-            value="pkuhelper"
-            class="mx-2 radio-xs"
-            [(ngModel)]="auth.loginMethod"
-          />
-          <label for="pkuhelper" class="label-text"> 北大地带用户令牌 </label>
-          <input
-            type="text"
-            placeholder="令牌"
-            class="flex-grow font-mono input input-xs ml-2"
-            [disabled]="auth.loginMethod !== 'pkuhelper'"
-            [(ngModel)]="auth.token"
-          />
-        </div>
-        <div class="flex flex-row items-center mb-2">
-          <input
-            type="radio"
-            name="loginMethod"
-            id="iaaa"
-            value="iaaa"
-            class="mx-2 radio-xs"
-            [(ngModel)]="auth.loginMethod"
-          />
-          <label for="iaaa" class="label-text"> 北京大学统一身份认证 </label>
-          <input
-            type="text"
-            placeholder="学号"
-            class="flex-grow font-mono input input-xs ml-2"
-            [disabled]="auth.loginMethod !== 'iaaa'"
-            [(ngModel)]="auth.username"
-          />
-          <input
-            type="password"
-            placeholder="密码"
-            class="flex-grow font-mono input input-xs ml-2"
-            [disabled]="auth.loginMethod !== 'iaaa'"
-            [(ngModel)]="auth.password"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<app-header></app-header>
 <div class="container">
   <app-controller></app-controller>
   <app-osu-button
@@ -58,7 +6,9 @@
     [buttonText]="
       auth.loading
         ? '...'
-        : !(auth.loginMethod === 'pkuhelper' ? auth.token : auth.username && auth.password)
+        : !(auth.loginMethod === 'pkuhelper'
+            ? auth.token
+            : auth.username && auth.password)
         ? '请先登录'
         : '查询'
     "
@@ -66,7 +16,9 @@
     (click)="auth.load()"
     [disabled]="
       auth.loading ||
-      !(auth.loginMethod === 'pkuhelper' ? auth.token : auth.username && auth.password)
+      !(auth.loginMethod === 'pkuhelper'
+        ? auth.token
+        : auth.username && auth.password)
     "
   >
   </app-osu-button>

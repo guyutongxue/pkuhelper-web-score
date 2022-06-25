@@ -15,6 +15,7 @@ import { VerticalLayoutComponent } from './vertical-layout/vertical-layout.compo
 import { CourseViewerComponent } from './course-viewer/course-viewer.component';
 import { ClickHandlerDirective } from './click-handler.directive';
 import { MomentModule } from 'ngx-moment';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MomentModule } from 'ngx-moment';
     RowLayoutComponent,
     VerticalLayoutComponent,
     CourseViewerComponent,
-    ClickHandlerDirective
+    ClickHandlerDirective,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
