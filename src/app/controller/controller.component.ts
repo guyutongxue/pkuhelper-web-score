@@ -52,8 +52,11 @@ export class ControllerComponent implements OnInit {
       clearInterval(this.interval);
       this.interval = null;
     } else {
-      this.nextUpdateTime += Date.now() + this.INTERVAL;
-      this.interval = setInterval(() => this.auth.load(), this.INTERVAL);
+      this.nextUpdateTime = Date.now() + this.INTERVAL;
+      this.interval = setInterval(() => {
+        this.auth.load();
+        this.nextUpdateTime = Date.now() + this.INTERVAL;
+      }, this.INTERVAL);
     }
   }
 }
