@@ -6,20 +6,13 @@
     [buttonText]="
       auth.loading
         ? '...'
-        : !(auth.loginMethod === 'pkuhelper'
-            ? auth.token
-            : auth.username && auth.password)
+        : !(auth.username && auth.password)
         ? '请先登录'
         : '查询'
     "
     text="点击按钮查询成绩"
     (click)="auth.load()"
-    [disabled]="
-      auth.loading ||
-      !(auth.loginMethod === 'pkuhelper'
-        ? auth.token
-        : auth.username && auth.password)
-    "
+    [disabled]="auth.loading || !(auth.username && auth.password)"
   >
   </app-osu-button>
   <ng-template #viewer>
@@ -42,22 +35,9 @@
         请仔细阅读以下内容。点击本弹窗的“继续”按钮或使用本网站的任何功能即视为您同意以下条款。
       </p>
       <p class="mb-2">
-        本网站是北大地带（PKUHelper）成绩查询页面的重新实现。本网站将使用以下两种方式之一以获取您的成绩信息：
-      </p>
-      <ul class="list-disc list-inside mb-2">
-        <li>使用北大地带用户令牌（PKUHelper User Token）</li>
-        <li>使用北京大学统一认证</li>
-      </ul>
-      <p class="mb-2">
+        本网站是北大树洞（原北大地带，PKUHelper）成绩查询页面的重新实现。本网站将使用北京大学统一认证以获取您的成绩信息。
         <strong>本网站承诺不会收集您的任何认证凭证</strong
-        >，包括北大地带用户令牌、您的北京大学学号和北京大学门户密码。
-      </p>
-      <p class="mb-2">
-        您的北大地带用户令牌仅将用于发送给北大地带服务器（<code>pkuhelper.pku.edu.cn</code>）的相关
-        API，以获取您的成绩信息。该功能全部在您的浏览器内实现。您可以随时通过<a
-          href="https://pkuhelper.pku.edu.cn/hole"
-          >P大树洞</a
-        >的账户界面获取或重置您的用户令牌。
+        >，包括您的北京大学学号和北京大学门户密码。
       </p>
       <p class="mb-2">
         您的北京大学学号、北京大学门户密码仅将发送给北京大学统一认证服务器（<code>iaaa.pku.edu.cn</code>）。本网站将利用该服务器返回的令牌、北京大学门户（<code>portal.pku.edu.cn</code>）返回的令牌以获取您的成绩信息。此功能使用
@@ -65,7 +45,7 @@
         部署，并与本项目一同开源；如果您不信任我们的承诺，您可以选择关闭本网页。
       </p>
       <p class="mb-2">
-        您的北大地带用户令牌、北京大学学号将仅存储在浏览器端的本地存储（Local
+        您的北京大学学号将仅存储在浏览器端的本地存储（Local
         Storage）。此外，本网站不会以任何方式存储您的北京大学门户密码。本网站不会将您的上述凭证发送到任何除上述服务器外的其他服务器。
       </p>
     </div>
