@@ -6,7 +6,9 @@
 
 > 我曾询问 [@xmcp](https://github.com/xmcp) 是否可提供代码，对方已读不回。（？？？）
 
-出于保护性的目的，我计划重建本项目源码；但由于我不熟悉 React，便改用 Angular 重写。获取成绩的 API 仍保留为 `pkuhelper.pku.edu.cn/api_xmcp`。但由于该 API 并不可靠，我同时添加直接从北大门户获取成绩的方法。
+出于保护性的目的，我计划重建本项目源码；但由于我不熟悉 React，便改用 Angular 重写。获取成绩~~的 API 仍保留为 `pkuhelper.pku.edu.cn/api_xmcp`。但由于该 API 并不可靠，我同时添加~~直接从北大门户获取成绩的方法。
+
+**2023.1.7 更新** PKUHelper 改版为“北大树洞”，原有 User Token 机制及相关 API 被破坏。仅保留北大门户获取成绩的方法。
 
 ## 与现在运行的 PKUHelper 成绩查询的不同点
 
@@ -18,4 +20,4 @@
   - ……
 - 移除了指向[“课程测评”](https://courses.pinzhixiaoyuan.com/)的链接。与 PKUHelper 不同，本项目与“课程测评”不存在合作关系；因此本项目不能冒用 PKUHelper 的身份与“课程测评”通信。
 - 为强调项目的严肃性，移除了“八十四”彩蛋。
-- 增加了 IAAA 登录（通过 Vercel Serverless Function 部署）。
+- 改用 IAAA 登录（通过 Vercel Serverless Function 部署）。
