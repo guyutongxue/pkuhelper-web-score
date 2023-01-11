@@ -2,20 +2,58 @@
   <div class="aux-margin">
     <div class="title"><p class="centered-line">成绩查询</p></div>
     <div class="flex flex-row flex-wrap">
-      <strong>登录</strong>
+      <strong>登录方式</strong>
       <div class="flex-grow">
         <div class="flex flex-row items-center">
+          <input
+            type="radio"
+            name="loginMethod"
+            id="treehole"
+            value="treehole"
+            class="mx-2 radio-xs"
+            [(ngModel)]="auth.loginMethod"
+          />
+          <label for="treehole" class="label-text">
+            北大树洞 JWT
+            <a
+              href="https://github.com/Guyutongxue/pkuhelper-web-score/blob/master/docs/treehole-jwt.md"
+              target="_blank"
+              rel="noopenner"
+            >
+              (?)
+            </a>
+          </label>
+          <input
+            type="text"
+            placeholder="JWT"
+            class="flex-grow font-mono input input-xs ml-2 mb-2"
+            [disabled]="auth.loginMethod !== 'treehole'"
+            [(ngModel)]="auth.token"
+          />
+        </div>
+        <div class="flex flex-row items-center">
+          <input
+            type="radio"
+            name="loginMethod"
+            id="iaaa"
+            value="iaaa"
+            class="mx-2 radio-xs flex-shrink-0"
+            [(ngModel)]="auth.loginMethod"
+          />
+          <label for="iaaa" class="label-text"> 北京大学统一身份认证 </label>
           <div class="flex-grow flex flex-row flex-wrap">
             <input
               type="text"
               placeholder="学号"
               class="flex-grow font-mono input input-xs ml-2 mb-2"
+              [disabled]="auth.loginMethod !== 'iaaa'"
               [(ngModel)]="auth.username"
             />
             <input
               type="password"
               placeholder="密码"
               class="flex-grow font-mono input input-xs ml-2 mb-2"
+              [disabled]="auth.loginMethod !== 'iaaa'"
               [(ngModel)]="auth.password"
             />
           </div>
