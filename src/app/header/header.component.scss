@@ -1,6 +1,5 @@
 .title-bar {
-  background-color: rgba(255, 255, 255, 0.85);
-  color: black;
+  background-color: hsl(var(--b1) / 0.85);
   padding-bottom: 0.5em;
 
   .title {
