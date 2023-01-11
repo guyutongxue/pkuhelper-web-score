@@ -46,9 +46,10 @@ export class DataService {
       });
   }
 
-  async loadFromUrl(url: string) {
+  async loadFromUrl(url: string, init?: RequestInit) {
     try {
-      const src: ApiResult = await fetch(url).then(r => r.json());
+      let originalSrc = await fetch(url, init).then(r => r.json());
+      const src: ApiResult = "data" in originalSrc ? originalSrc.data : originalSrc;
       if (src.success) {
         this.#dataSource$.next(src);
       } else {
