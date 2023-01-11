@@ -95,9 +95,15 @@ export class DataService {
   tamper(idx: number, val: string) {
     const scores = this.#scores$.value;
     if (scores === null) return;
+    if (typeof val !== "string") return;
     val = val.toUpperCase();
+    if (val === "IF YOU CAN") {
+      shownScoreHelper.set(shownScoreHelper.get().filter(c => scores.courses[idx].id !== c));
+      shownScoreHelper.apply();
+      this.#updateNewBlock(scores);
+    }
     if (!checkScore(val)) return;
-    console.log(idx, val);
+    // console.log(idx, val);
     scores.courses[idx].score = val;
     this.#scores$.next(scores);
   }

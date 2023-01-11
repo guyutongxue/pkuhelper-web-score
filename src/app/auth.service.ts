@@ -33,7 +33,7 @@ export class AuthService {
       this.dataService.clear();
       if (this.loginMethod === 'treehole') {
         if (
-          localStorage['LOGIN_METHOD'] !== 'pkuhelper' ||
+          localStorage['LOGIN_METHOD'] !== 'treehole' ||
           this.token !== localStorage['TOKEN']
         ) {
           shownScoreHelper.clear();
