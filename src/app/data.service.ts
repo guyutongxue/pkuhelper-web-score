@@ -48,8 +48,7 @@ export class DataService {
 
   async loadFromUrl(url: string, init?: RequestInit) {
     try {
-      let originalSrc = await fetch(url, init).then(r => r.json());
-      const src: ApiResult = "data" in originalSrc ? originalSrc.data.score : originalSrc;
+      let src = await fetch(url, init).then(r => r.json());
       if (src.success) {
         this.#dataSource$.next(src);
       } else {
