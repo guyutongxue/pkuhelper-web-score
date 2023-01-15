@@ -38,11 +38,7 @@ export class AuthService {
         ) {
           shownScoreHelper.clear();
         }
-        await this.dataService.loadFromUrl(`https://treehole.pku.edu.cn/api/course/score`, {
-          headers: {
-            "Authorization": `bearer ${this.token}`
-          }
-        });
+        await this.dataService.loadFromUrl(`/api/treehole?token=${this.token}`);
         localStorage['TOKEN'] = this.token;
       } else {
         if (this.username !== localStorage['USERNAME']) {

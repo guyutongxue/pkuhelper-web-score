@@ -94,6 +94,11 @@ export default async function (request, response) {
         success: false,
         errMsg: `Portal respond with non-JSON content: ${r3}`,
       });
+    } else {
+      response.status(500).json({
+        success: false,
+        errMsg: e instanceof Error ? e.message : e,
+      });
     }
   }
 }
