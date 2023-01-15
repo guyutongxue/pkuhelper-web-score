@@ -1,6 +1,8 @@
 // @ts-check
 /* eslint-env node */
 
+import fetch from "node-fetch";
+
 /**
  *
  * @param {import('@vercel/node').VercelRequest} request
