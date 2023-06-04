@@ -19,16 +19,23 @@
       [extra]="extras"
       [needHideText]="true"
     >
-      <span *ngIf="tampered"
+      <span *ngIf="tampered; else pinzhi"
         class="prevent-click-handler course-badge course-badge-danger"
         (click)="untamper()"
         data-tooltip="非真实成绩"
       >
         <span class="icon icon-warning"></span>
       </span>
+      <ng-template #pinzhi>
+        <span
+          class="prevent-click-handler course-badge course-badge-primary"
+          (click)="gotoPinzhi()"
+          data-tooltip="测评该课程">
+          <span class="icon icon-share"></span>
+        </span>
+      </ng-template>
     </app-vertical-layout>
 
-    <!-- <ScoreTamperer score={fix(props.course.score,1)} onChange={props.tamper_score} /> -->
     <app-vertical-layout
       right
       [up]="fix(score, 1)"

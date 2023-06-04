@@ -38,39 +38,48 @@ import {
   styleUrls: ['./course-viewer.component.scss'],
 })
 export class CourseViewerComponent {
-
   constructor(
     private options: OptionsService,
     private dataService: DataService,
-    @Inject(DOCUMENT) private document: Document) {
-  }
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
-  @Input() set index(value: number) { this.#index$.next(value); }
+  @Input() set index(value: number) {
+    this.#index$.next(value);
+  }
   #index$ = new BehaviorSubject<number>(-1);
 
-  #subscription = this.#index$.pipe(
-    switchMap((idx) => this.dataService.course$(idx)),
-    untilDestroyed(this)
-  ).subscribe((course) => {
-    this.name = course.name;
-    this.details = course.details;
-    this.credit = course.credit;
-    this.score = course.score;
-    this.tampered = scoreTampered([course]);
-    this.gpa = courseGpaFromNormalizedScore(course.score);
-    const extraEle = this.document.createElement("p");
-    for (const [k, n] of course.extras) {
-      const keyEle = this.document.createElement("strong");
-      keyEle.innerText = k + '：';
-      extraEle.appendChild(keyEle);
-      extraEle.appendChild(n.cloneNode(true));
-      extraEle.appendChild(this.document.createElement("br"));
-    }
-    this.extras = extraEle;
-  });
+  #subscription = this.#index$
+    .pipe(
+      switchMap((idx) => this.dataService.course$(idx)),
+      untilDestroyed(this)
+    )
+    .subscribe((course) => {
+      this.id = course.id;
+      this.name = course.name;
+      this.details = course.details;
+      this.teacher = course.firstTeacher;
+      this.semester = `${course.year}${course.semester}`;
+      this.credit = course.credit;
+      this.score = course.score;
+      this.tampered = scoreTampered([course]);
+      this.gpa = courseGpaFromNormalizedScore(course.score);
+      const extraEle = this.document.createElement('p');
+      for (const [k, n] of course.extras) {
+        const keyEle = this.document.createElement('strong');
+        keyEle.innerText = k + '：';
+        extraEle.appendChild(keyEle);
+        extraEle.appendChild(n.cloneNode(true));
+        extraEle.appendChild(this.document.createElement('br'));
+      }
+      this.extras = extraEle;
+    });
 
-  name = "";
-  details = "";
+  id = '';
+  name = '';
+  details = '';
+  teacher = '';
+  semester = '';
   credit = 0;
   score: string | number = 0;
   tampered = false;
@@ -82,6 +91,20 @@ export class CourseViewerComponent {
   }
   untamper() {
     this.dataService.untamper(this.#index$.value);
+  }
+
+  gotoPinzhi() {
+    const params = new URLSearchParams({
+      course: this.id,
+      course_name: this.name,
+      term: this.semester,
+      teacher: this.teacher,
+      score: String(this.score),
+      platform: 'new_web_score',
+    });
+    const url = `https://courses.pinzhixiaoyuan.com/reviews/post_external?${params}`;
+    console.log(url);
+    window.open(url, '_blank');
   }
 
   judgeByGpa$ = this.options.judgeByGpa$;
