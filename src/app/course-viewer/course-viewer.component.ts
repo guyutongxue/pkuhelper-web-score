@@ -59,7 +59,7 @@ export class CourseViewerComponent {
       this.name = course.name;
       this.details = course.details;
       this.teacher = course.firstTeacher;
-      this.semester = `${course.year}${course.semester}`;
+      this.semester = `${course.year}-${course.year + 1}${course.semester}`;
       this.credit = course.credit;
       this.score = course.score;
       this.tampered = scoreTampered([course]);
