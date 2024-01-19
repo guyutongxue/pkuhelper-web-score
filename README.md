@@ -1,3 +1,7 @@
+# 作者离开北大，项目不再维护
+
+**有兴趣可自行 fork 部署**
+
 # PKUHelper Score
 
 这是由校友 [@xmcp](https://github.com/xmcp) 开发的成绩查询工具，深受学生喜爱。但 PKUHelper 开发者团队于 2020 年 11 月[被迫交出运营权](https://pkuhelper-web.github.io/announce_v3.html)，同时该工具的源码 https://github.com/pkuhelper-web/score 也因不明原因被删除。
